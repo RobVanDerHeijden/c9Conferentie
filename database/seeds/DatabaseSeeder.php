@@ -1,5 +1,5 @@
 <?php
-use App\Agenda;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,6 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AgendaTableSeeder::class);
+        $this->call(TicketTableSeeder::class);
     }
 }

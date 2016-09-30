@@ -15,5 +15,10 @@ class AgendaTableSeeder extends Seeder
         $agenda->naam="ROYYY";
         $agenda->slot=333;
         $agenda->save();
+        
+        $agenda2 = new Agenda();
+        $agenda2->naam="Dannyyy";
+        $agenda2->slot=420;
+        $agenda2->save();
     }
 }

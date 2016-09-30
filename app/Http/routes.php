@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 
 
@@ -21,21 +21,46 @@ Route::get('/contact', function () {
     return view('contact.contact');
 })->name('contact');
 
+Route::get('/connect', function () {
+    return view('connect.connect');
+})->name('connect');
+
+
 
 Route::group(['prefix' => 'agenda'], function() {
-    
     Route::get('/', function () {
-    return view('agenda.agenda');
+        return view('agenda.agenda');
     })->name('agenda');
+    Route::get('/aanmeldingen', function () {
+        return view('agenda.aanmeldingen');
+    })->name('aanmeldingen');
     
 });
 
 Route::group(['prefix' => 'reserveren'], function() {
     
-    Route::get('/', function () {
-    return view('reserveren.reserveren');
-    })->name('reserveren');
+    Route::get('/', ['uses' => 'ReserveringController@getReserveringIndex', 'as' => 'reservering']);
+    
+    Route::post('/postreservering', ['uses' => 'ReserveringController@postReservering', 'as' => 'postreservering']);
+    
     Route::get('/vervolg', function () {
-    return view('reserveren.vervolg');
-    })->name('vervolg');
+        return view('reserveren.vervolg');
+    })->name('vervolgReserveren');
+    
+});
+
+Route::group(['prefix' => 'aanmelden'], function() {
+    
+    Route::get('/', function () {
+        return view('aanmelden.aanmelden');
+    })->name('aanmelden');
+    Route::get('/vervolg', function () {
+        return view('aanmelden.vervolg');
+    })->name('vervolgaanmelden');
+    Route::get('/complete', function () {
+        return view('aanmelden.complete');
+    })->name('complete');
+    Route::get('/bevestiging', function () {
+        return view('aanmelden.bevestiging');
+    })->name('bevestiging');
 });

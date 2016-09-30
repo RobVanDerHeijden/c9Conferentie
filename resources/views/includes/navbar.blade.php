@@ -5,8 +5,8 @@
             <li role="presentation"><a href="/contact">Contact</a></li>
             <li role="presentation"><a href="/agenda">Agenda</a></li>
             <li><a href="/reserveren">Reserveren</a></li>
-            <li><a href=""></a></li>
+            <li><a href="/aanmelden">Aanmelden</a></li>
+            <li><a href="/connect">connect</a></li>
         </ul>
     </nav>
-    <h3 class="text-muted">Conferentiesite</h3>
 </div>
