@@ -175,6 +175,5 @@
     <footer class="footer">
         <p>&copy;Bunky, 2016</p>
     </footer>
-
 </div> <!-- /container -->
 @endsection

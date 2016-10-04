@@ -12,12 +12,17 @@ class ReserveringController extends Controller
 {
     public function getReserveringIndex()
     {
-        return view('reserveren.reserveren');
+        $query = DB::table('tickets')->get();
+        return view('reserveren.reserveren')->with(['tickets'=>$query]);
     }
     
     public function postReservering(Request $request)
     {
-        
+        $this->validate($request, [
+            'naam' => 'required',
+            'email' => 'required|email'
+        ]);
+            
         $user = new User();
         $user->id = DB::table('users')->max('id') + 1;
         $user->naam = $request["naam"];
@@ -38,7 +43,7 @@ class ReserveringController extends Controller
         $reservering->prijs = 70;
         $reservering->save();
         
-        return redirect()->route("vervolgReserveren")->with(["success" => "U heeft succesvol gereserveerd!"]);
+        return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
 
     }
 }

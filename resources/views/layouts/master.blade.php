@@ -18,6 +18,8 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         
+        <script src="{{ URL::secure('src/jquery/jquery.min.js') }}"></script>
+        
     </head>
     <body>
         @include('includes.header')
@@ -28,7 +30,7 @@
         </div>
         <footer class="footer">
             <div class="container">
-                <p class="text-muted">Place sticky footer content here.</p>
+                <p class="text-muted">Bunky™ corp.&copy;</p>
             </div>
         </footer>
         

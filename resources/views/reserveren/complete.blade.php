@@ -1,4 +1,5 @@
 @extends('layouts.master')
 @section('content')
-Complete
+    @include('includes.info-box')
+    <a href="/reserveren">Terug</a>
 @endsection
