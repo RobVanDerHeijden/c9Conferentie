@@ -33,11 +33,15 @@ Route::group(['prefix' => 'agenda'], function() {
     })->name('aanmeldingen');
 });
 
+Route::post('/postreserveringarray', ['uses'  => 'ReserveringController@postReserveringArray', 'as' => 'postreserveringarray']);
+    
+
 Route::group(['prefix' => 'reserveren'], function() {
     
     Route::get('/', ['uses' => 'ReserveringController@getReserveringIndex', 'as' => 'reservering']);
     
     Route::post('/postreservering', ['uses' => 'ReserveringController@postReservering', 'as' => 'postreservering']);
+    
     
     Route::get('/vervolg', function () {
         return view('reserveren.vervolg');
