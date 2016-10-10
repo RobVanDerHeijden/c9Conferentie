@@ -18,7 +18,6 @@ class CreateMaaltijdsTable extends Migration
             $table->float('prijs');
             $table->string('beschikbaar');
             $table->string('vegetarisch');
-
         });
     }
 

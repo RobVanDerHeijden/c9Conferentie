@@ -25,11 +25,6 @@
             <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
         </div>
     </div>
-    
-    <footer class="footer">
-        <p>&copy;Bunky, 2016</p>
-    </footer>
-
 </div> <!-- /container -->
 @endsection
        

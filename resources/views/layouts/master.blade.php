@@ -26,10 +26,9 @@
         <div class="container">
             @include('includes.navbar')
             @yield('content')
-            
         </div>
         <footer class="footer">
-            <div class="container">
+            <div class="container col-lg-12">
                 <p class="text-muted">Bunky™ corp.&copy;</p>
             </div>
         </footer>

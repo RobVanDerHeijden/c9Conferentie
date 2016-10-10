@@ -33,15 +33,13 @@ Route::group(['prefix' => 'agenda'], function() {
     })->name('aanmeldingen');
 });
 
-Route::post('/postreserveringarray', ['uses'  => 'ReserveringController@postReserveringArray', 'as' => 'postreserveringarray']);
-    
-
 Route::group(['prefix' => 'reserveren'], function() {
     
     Route::get('/', ['uses' => 'ReserveringController@getReserveringIndex', 'as' => 'reservering']);
     
     Route::post('/postreservering', ['uses' => 'ReserveringController@postReservering', 'as' => 'postreservering']);
     
+    Route::post('/postreserveringarray', ['uses' => 'ReserveringController@postReserveringArray', 'as' => 'postreserveringarray']);
     
     Route::get('/vervolg', function () {
         return view('reserveren.vervolg');
@@ -50,7 +48,6 @@ Route::group(['prefix' => 'reserveren'], function() {
     Route::get('/complete', function() {
         return view('reserveren.complete');
     })->name('reserverenComplete');
-    
 });
 
 Route::group(['prefix' => 'aanmelden'], function() {

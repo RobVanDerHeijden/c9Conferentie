@@ -23,14 +23,14 @@ class ReserveringController extends Controller
         $post = $request->all();
         //var_dump($post);
         $user = array('id' => DB::table('users')->max('id') + 1,
-        'naam' => $post["naam"],
-        'tussenvoegsel' => $post["tussenvoegsel"],
-        'achternaam' => $post["achternaam"],
-        'email' => $post["email"],
-        'telnummer' => $post["telnummer"],
-        'adres' => $post["adres"],
-        'woonplaats' => $post["woonplaats"],
-        'rol' => "bezoeker",
+            'naam' => $post["naam"],
+            'tussenvoegsel' => $post["tussenvoegsel"],
+            'achternaam' => $post["achternaam"],
+            'email' => $post["email"],
+            'telnummer' => $post["telnummer"],
+            'adres' => $post["adres"],
+            'woonplaats' => $post["woonplaats"],
+            'rol' => "bezoeker",
         );
         $id = DB::table('users')->insertgetId($user);
         
