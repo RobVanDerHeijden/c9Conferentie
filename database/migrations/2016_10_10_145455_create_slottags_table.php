@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Migrations\Migration; 
 
 class CreateSlottagsTable extends Migration
 {
@@ -12,7 +12,7 @@ class CreateSlottagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('slottags', function (Blueprint $table) {
+        Schema::create('slot_tags', function (Blueprint $table) {
             $table->integer('idSlot')->unsigned();
             $table->foreign('idSlot')->references('id')->on('slots');
             $table->integer('idTag')->unsigned();

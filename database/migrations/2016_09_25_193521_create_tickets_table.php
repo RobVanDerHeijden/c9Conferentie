@@ -14,8 +14,8 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idMaaltijd')->unsigned();
-            $table->foreign('idMaaltijd')->references('id')->on('maaltijds');
+            //$table->integer('idMaaltijd')->unsigned();
+            //$table->foreign('idMaaltijd')->references('id')->on('maaltijds');
             $table->string('soort');
             $table->float('prijs');
             $table->integer('beschikbaar');

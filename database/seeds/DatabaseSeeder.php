@@ -16,12 +16,13 @@ class DatabaseSeeder extends Seeder
         $this->call(MaaltijdTableSeeder::class);
         $this->call(TicketTableSeeder::class);
         $this->call(UserTableSeeder::class);
-        $this->call(SlotTableSeeder::class);
         $this->call(TagTableSeeder::class);
-        
         $this->call(StatusTableSeeder::class);
         $this->call(ZaalTableSeeder::class);
-        */
         $this->call(SlotTableSeeder::class);
+        $this->call(ReserveringTableSeeder::class);
+        $this->call(SlottagTableSeeder::class);
+        $this->call(AanmeldingTableSeeder::class);
+        */
     }
 }

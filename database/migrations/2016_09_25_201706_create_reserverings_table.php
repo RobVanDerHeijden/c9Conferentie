@@ -18,6 +18,8 @@ class CreateReserveringsTable extends Migration
             $table->foreign('idUser')->references('id')->on('users');
             $table->integer('idTicket')->unsigned();
             $table->foreign('idTicket')->references('id')->on('tickets');
+            $table->integer('idMaaltijd')->unsigned();
+            $table->foreign('idMaaltijd')->references('id')->on('maaltijds');
             $table->string('betaalmethode');
             $table->string('barcode');
             $table->float('prijs');

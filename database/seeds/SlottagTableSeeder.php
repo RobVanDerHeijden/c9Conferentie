@@ -12,9 +12,24 @@ class SlottagTableSeeder extends Seeder
      */
     public function run()
     {
-        $slotTag = new SlotTag();
-        $slotTag->idSlot = 1;
-        $slotTag->idTag = 2;
-        $slotTag->save();
+        $slottag = new SlotTag();
+        $slottag->idSlot = 1;
+        $slottag->idTag = 1;
+        $slottag->save();
+        
+        $slottag = new SlotTag();
+        $slottag->idSlot = 2;
+        $slottag->idTag = 1;
+        $slottag->save();
+        
+        $slottag = new SlotTag();
+        $slottag->idSlot = 5;
+        $slottag->idTag = 2;
+        $slottag->save();
+        
+        $slottag = new SlotTag();
+        $slottag->idSlot = 5;
+        $slottag->idTag = 3;
+        $slottag->save();
     }
 }
