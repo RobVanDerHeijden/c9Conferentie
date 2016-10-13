@@ -13,41 +13,31 @@ class TicketTableSeeder extends Seeder
     {
         $ticket = new Ticket();
         $ticket->reservering = 1;
-        $ticket->soort = "vrijdag";
-        $ticket->prijs = 45;
-        $ticket->beschikbaar = 250;
+        $ticket->soort = 1;
         $ticket->barcode = "31415926535989732384262433832795001";
         $ticket->save();
         
         $ticket = new Ticket();
         $ticket->reservering = 1;
-        $ticket->soort = "zaterdag";
-        $ticket->prijs = 60;
-        $ticket->beschikbaar = 250;
+        $ticket->soort = 2;
         $ticket->barcode = "31415926535989732384262433832795002";
         $ticket->save();
         
         $ticket = new Ticket();
         $ticket->reservering = 1;
-        $ticket->soort = "zondag";
-        $ticket->prijs = 30;
-        $ticket->beschikbaar = 250;
+        $ticket->soort = 3;
         $ticket->barcode = "31415926535989732384262433832795003";
         $ticket->save();
         
         $ticket = new Ticket();
         $ticket->reservering = 1;
-        $ticket->soort = "passe-partout";
-        $ticket->prijs = 100;
-        $ticket->beschikbaar = 250;
+        $ticket->soort = 4;
         $ticket->barcode = "31415926535989732384262433832795004";
         $ticket->save();
         
         $ticket = new Ticket();
-        $ticket->reservering = 1;
-        $ticket->soort = "weekend";
-        $ticket->prijs = 80;
-        $ticket->beschikbaar = 250;
+        $ticket->reservering = 2;
+        $ticket->soort = 5;
         $ticket->barcode = "31415926535989732384262433832795005";
         $ticket->save();
     }

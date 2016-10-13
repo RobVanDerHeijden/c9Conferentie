@@ -14,29 +14,23 @@ class MaaltijdTableSeeder extends Seeder
     {
         $maaltijd = new Maaltijd();
         $maaltijd->reservering = 1;
-        $maaltijd->soortmaaltijd = "lunch";
-        $maaltijd->prijs = 20;
-        $maaltijd->beschikbaar = "all";
+        $maaltijd->soort = 1;
         $maaltijd->vegetarisch = "nee";
         $maaltijd->barcode = "0420691337001";
         $maaltijd->save();
         
         $maaltijd = new Maaltijd();
         $maaltijd->reservering = 1;
-        $maaltijd->soortmaaltijd = "diner";
-        $maaltijd->prijs = 30;
-        $maaltijd->beschikbaar = "weekend";
+        $maaltijd->soort = 2;
         $maaltijd->vegetarisch = "nee";
-        $maaltijd->barcode = "0420691337002";
+        $maaltijd->barcode = "0420691337001";
         $maaltijd->save();
         
         $maaltijd = new Maaltijd();
         $maaltijd->reservering = 1;
-        $maaltijd->soortmaaltijd = "combo";
-        $maaltijd->prijs = 50;
-        $maaltijd->beschikbaar = "weekend";
+        $maaltijd->soort = 3;
         $maaltijd->vegetarisch = "nee";
-        $maaltijd->barcode = "0420691337003";
+        $maaltijd->barcode = "0420691337001";
         $maaltijd->save();
     }
 }

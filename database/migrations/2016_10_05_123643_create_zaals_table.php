@@ -25,6 +25,6 @@ class CreateZaalsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('zaals');
     }
 }

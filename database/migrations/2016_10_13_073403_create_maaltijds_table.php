@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMaaltijdenTable extends Migration
+class CreateMaaltijdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,11 @@ class CreateMaaltijdenTable extends Migration
             $table->increments('id');
             $table->integer('reservering')->unsigned();
             $table->foreign('reservering')->references('id')->on('reserverings');
-            $table->string('soortmaaltijd');
-            $table->float('prijs');
-            $table->string('beschikbaar');
+            //$table->string('soortmaaltijd');
+            $table->integer('soort')->unsigned();
+            $table->foreign('soort')->references('id')->on('maaltijdsoorts');
+            //$table->float('prijs');
+            //$table->string('beschikbaar');
             $table->string('vegetarisch');
             $table->string('barcode');
         });

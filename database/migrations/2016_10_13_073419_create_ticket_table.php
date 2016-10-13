@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTicketsTable extends Migration
+class CreateTicketTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,11 @@ class CreateTicketsTable extends Migration
             $table->increments('id');
             $table->integer('reservering')->unsigned();
             $table->foreign('reservering')->references('id')->on('reserverings');
-            $table->string('soort');
-            $table->float('prijs');
-            $table->integer('beschikbaar');
+            $table->integer('soort')->unsigned();
+            $table->foreign('soort')->references('id')->on('ticketsoorts');
+            //$table->string('soort');
+            //$table->float('prijs');
+            //$table->integer('beschikbaar');
             $table->string('barcode');
         });
     }

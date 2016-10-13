@@ -27,6 +27,6 @@ class CreateSlottagsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('slot_tags');
     }
 }

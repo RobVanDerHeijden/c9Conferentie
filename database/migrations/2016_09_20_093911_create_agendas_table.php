@@ -14,9 +14,9 @@ class CreateAgendasTable extends Migration
     {
         Schema::create('agendas', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('naam');
             $table->integer('slot');
+            $table->timestamps();
             
         });
     }

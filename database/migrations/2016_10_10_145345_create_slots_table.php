@@ -18,6 +18,8 @@ class CreateSlotsTable extends Migration
             $table->foreign('idZaal')->references('idZaal')->on('zaals');
             $table->integer('idStatus')->unsigned();
             $table->foreign('idStatus')->references('idStatus')->on('statuses');
+            $table->integer('agenda')->unsigned();
+            $table->foreign('agenda')->references('id')->on('agendas');
             $table->string('beginTijd');
             $table->string('eindTijd');
             $table->string('dag');
@@ -32,6 +34,6 @@ class CreateSlotsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('slots');
     }
 }
