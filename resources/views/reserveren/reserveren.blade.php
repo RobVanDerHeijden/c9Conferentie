@@ -3,26 +3,27 @@
 <script>
     
     $(function(){
-        $('.add').click(function(){
+        /* ************************ Ticket ************************ */
+        /* Add row ticket */
+        $('.addticket').click(function(){
             var ticket = $('.ticket').html();
             var maaltijd = $('.maaltijd').html();
-            var n = ($('.body tr').length-0)+1;
+            var n = ($('.body_ticket tr').length-0)+1;
             
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
                 '<td><select name="ticket[]" class="ticket">'+ ticket +'</select></td>' + 
         		'<td><input type="text" name="price[]" class="price" value="45" readonly></td>' + 
-        		'<td><select name="maaltijd[]" class="maaltijd">'+ maaltijd +'</select></td>' + 
-            	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
-        		'<td><input type="text" name="amount[]" class="amount" value="65" readonly></td>' + 
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
-            $('.body').append(newTicketRow);		
+            $('.body_ticket').append(newTicketRow);		
         });
     
-        $(".body").delegate(".delete", "click", function() {
+        /* Delete selected row ticket */
+        $(".body_ticket").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
         });
         
-        $('.body').delegate(".ticket", "change", function() {
+        /* Change value depending on type Ticket */
+        $('.body_ticket').delegate(".ticket", "change", function() {
             var newTicketRow = $(this).parent().parent();
             var prijs = newTicketRow.find(".ticket option:selected").attr("ticket-prijs");
             newTicketRow.find(".price").val(prijs);
@@ -33,18 +34,64 @@
             newTicketRow.find(".amount").val(totaal);
         });
         
-        $('.body').delegate(".maaltijd", "change", function() {
-            var newTicketRow = $(this).parent().parent();
-            var prijs = newTicketRow.find(".maaltijd option:selected").attr("maaltijd-prijs");
-            newTicketRow.find(".priceMaaltijd").val(prijs);
-            
-            var maaltijd = newTicketRow.find(".priceMaaltijd").val();
-            var ticket = newTicketRow.find(".price").val();
-            var totaal = parseInt(maaltijd*1) + parseInt(ticket*1);
-            newTicketRow.find(".amount").val(totaal);
+        
+        /* ************************ Maaltijd ************************ */
+        /* Add row maaltijd */
+        $('.addmaaltijd').click(function(){
+            var maaltijd = $('.maaltijd').html();
+            var n = ($('.body_maaltijd tr').length-0)+1;
+            var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
+        		'<td><select name="maaltijd[]" class="maaltijd">'+ maaltijd +'</select></td>' + 
+        		'<td><input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarish" value="'+n+'" style="width:25px;height:25px"></td>' +
+            	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
+        		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
+            $('.body_maaltijd').append(newTicketRow);		
         });
         
-        $('.body').delegate(".amount", "change", function() {
+        /* Delete selected row maaltijd */
+        $(".body_maaltijd").delegate(".delete", "click", function() {
+            $(this).parent().parent().remove();
+        });
+        
+        /* Change value depending on type Maaltijd */
+        $('.body_maaltijd').delegate(".maaltijd", "change", function() {
+            var newTicketRow = $(this).parent().parent();
+            var prijs = newTicketRow.find(".maaltijd option:selected").attr("maaltijd-prijs");
+            
+            var x = newTicketRow.find(".vegetarischCheck");
+            if (x.attr('checked',true))
+            {
+               // var x = $('.b').attr('checked',true);
+                //alert(" yo");
+                prijs = prijs * 0.9;
+                
+            } else {
+                x.attr('checked',false)
+            }
+            //$('.b').attr('checked',true);
+            //window.alert(x);
+            //document.getElementById("vegetarisch").checked;
+            //if(x.checked === true) {
+            //    prijs = prijs * 0.9;
+            //}
+            newTicketRow.find(".priceMaaltijd").val(prijs);
+            
+            var sumMeals = 0;
+            $('.priceMaaltijd').each(function(i, obj) {
+                sumMeals += $(this).val()*1;
+            });
+            var sumTickets = 0;
+            $('.price').each(function(i, obj) {
+                sumTickets += $(this).val()*1;
+            });
+            
+            //window.alert(sumTickets);
+            
+            document.getElementById("totaalMaaltijd").value = sumMeals;
+        });
+        //
+        
+        $('.totaaldiv').delegate(".amount", "change", function() {
             var newTicketRow = $(this).parent().parent();
             var maaltijd = newTicketRow.find(".priceMaaltijd").val();
             var ticket = newTicketRow.find(".price").val();
@@ -106,49 +153,85 @@
     <br>
     <div class="col-md-12">
         @include('includes.info-box')
-        <button type="button" class="btn add" value="+">Ticket toevoegen +</button>
+        
         <form  method="post" action='{{route('postreserveringarray')}}' id='reserveren'>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nr.</th>
-                        <th>Naam</th>
-                        <th>Prijs</th>
-                        <th>Maaltijd</th>
-                        <th>PrijsMaaltijd</th>
-                        <th>Totaal</th>
-                    </tr>
-                </thead>
-                <tbody class="body">
-                    <label for="ticket">
-                        Kies een ticket: 
-                    </label><br>
-                    <tr>
-                        <th class="no">1</th>
-                        <td>
-                            <select name="ticket[]" class="ticket">
-                                @foreach($tickets as $ticket)
-                                    <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->soort }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" name="price[]" class="price" value="45" readonly>
-                        </td>
-                        <td>
-                            <select name="maaltijd[]" class="maaltijd">
-                                @foreach($maaltijden as $maaltijd)
-                                    <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>
-                        <td><input type="text" name="amount[]" class="amount" value="65" readonly></td>
-                    </tr>
-                </tbody>
-            </table>
             
-            <div class ="input-group">
+            <!-- ******* Ticket ******* -->
+            <div class="col-md-6">
+                <button type="button" class="btn addticket" value="+">Ticket toevoegen +</button><br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nr.</th>
+                            <th>Soort ticket</th>
+                            <th>Prijs</th>
+                        </tr>
+                    </thead>
+                    <tbody class="body_ticket">
+                        <label for="ticket">
+                            Kies een ticket: 
+                        </label><br>
+                        <tr>
+                            <th class="no">1</th>
+                            <td>
+                                <select name="ticket[]" class="ticket">
+                                    @foreach($tickets as $ticket)
+                                        <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->soort }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" name="price[]" class="price" value="45" readonly>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- ******* Maaltijd ******* -->
+            <div class="col-md-6">
+                <button type="button" class="btn addmaaltijd" value="+">Maaltijd toevoegen +</button><br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nr.</th>
+                            <th>Soort maaltijd</th>
+                            <th>Vegetarisch</th>
+                            <th>Prijs</th>
+                        </tr>
+                    </thead>
+                    <tbody class="body_maaltijd">
+                        <label for="maaltijd">
+                            Kies een maaltijd: 
+                        </label><br>
+                        <tr>
+                            <th class="no">1</th>
+                            <td>
+                                <select name="maaltijd[]" class="maaltijd">
+                                    @foreach($maaltijden as $maaltijd)
+                                        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td><input type="checkbox" class="vegetarischCheck" name="vegetarisch" value="1" style="width:25px;height:25px"></td>
+                            <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class ="totaaldiv col-md-12">
+                <br>
+                <center>
+                <label for="totaal">
+                    Totaal: 
+                </label>
+                <input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="65" readonly>
+                </center>
+            </div>
+            
+            <div class ="input-group col-md-12">
+                <br>
                 <label for="naam">
                     Voornaam: 
                 </label>
