@@ -1,16 +1,7 @@
 @extends('layouts.master')
 @section('content')
 <script>
-    /*$(function(){
-        alert("asdasd");
-    });*/
-    /*$( document ).ready(function() {
-        var newTicketRow = $(this).parent().parent();
-        var maaltijd = newTicketRow.find(".priceMaaltijd").val();
-        var ticket = newTicketRow.find(".price").val();
-        var totaal = parseInt(maaltijd*1) + parseInt(ticket*1);
-        newTicketRow.find(".amount").val(totaal);
-    });*/
+    
     $(function(){
         $('.add').click(function(){
             var ticket = $('.ticket').html();
@@ -61,6 +52,9 @@
             newTicketRow.find(".amount").val(totaal);
         });
     });
+    
+    
+    
 </script>
 
 <section class="reservering"> 
@@ -133,9 +127,9 @@
                         <th class="no">1</th>
                         <td>
                             <select name="ticket[]" class="ticket">
-                            @foreach($tickets as $ticket)
-                                <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->soort }}</option>
-                            @endforeach
+                                @foreach($tickets as $ticket)
+                                    <option ticket-prijs="{{ $ticket->prijs }}" value="{{ $ticket->id }}">{{ $ticket->soort }}</option>
+                                @endforeach
                             </select>
                         </td>
                         <td>
@@ -143,9 +137,9 @@
                         </td>
                         <td>
                             <select name="maaltijd[]" class="maaltijd">
-                            @foreach($maaltijden as $maaltijd)
-                                <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soortmaaltijd }}</option>
-                            @endforeach
+                                @foreach($maaltijden as $maaltijd)
+                                    <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>
+                                @endforeach
                             </select>
                         </td>
                         <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>

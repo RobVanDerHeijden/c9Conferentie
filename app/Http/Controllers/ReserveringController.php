@@ -14,14 +14,15 @@ class ReserveringController extends Controller
 {
     public function getReserveringIndex()
     {
-        $query = DB::table('tickets')->get();
-        $maaltijdquery = DB::table('maaltijds')->get();
+        $query = DB::table('ticketsoorts')->get();
+        $maaltijdquery = DB::table('maaltijdsoorts')->get();
         return view('reserveren.reserveren')->with(['tickets'=>$query, 'maaltijden'=>$maaltijdquery]);
     }
     
     public function postReserveringArray(Request $request){
         $post = $request->all();
         //var_dump($post);
+        /* ************* USER *********** */
         $user = array('id' => DB::table('users')->max('id') + 1,
             'naam' => $post["naam"],
             'tussenvoegsel' => $post["tussenvoegsel"],
@@ -35,27 +36,23 @@ class ReserveringController extends Controller
         $id = DB::table('users')->insertgetId($user);
         
         if ($id > 0) {
+            $reservering = array('id' => DB::table('reserverings')->max('id') + 1,
+                'idUser' => $id,
+                'betaalmethode' => $post["betaalmethode"],
+                'prijs' => 1
+            );
+            $idReservering = DB::table('reserverings')->insertgetId($reservering);
+                
             for ($i = 0; $i < count($post["ticket"]); $i++)
             {
-                $reservering = array('id' => DB::table('reserverings')->max('id') + 1,
-                    'idUser' => $id,
-                    //'idTicket' => $post["ticket"][$i],
-                    'betaalmethode' => $post["betaalmethode"],
-                    //'barcode' => $id . $i . $post["ticket"][$i],
-                    'prijs' => $post["amount"][$i]
-                );
-                $idReservering = DB::table('reserverings')->insertgetId($reservering);
-                // DB::table('reserverings')->insert($reservering);
-                
-                $ticket = array('id' => DB::table('reserverings')->max('id') + 1,
+                $ticket = array('id' => DB::table('tickets')->max('id') + 1,
                     'reservering' => $idReservering,
-                    'soort' => "vrijdag",
-                    'prijs' => 65,
-                    'beschikbaar' => 250,
-                    'barcode' => "250250250999"
+                    'soort' => $post["ticket"][$i],
+                    'barcode' => "123123" . $post["ticket"][$i] . $id
                 );
                 DB::table('tickets')->insert($ticket);
             }
+            
             Event::fire(new MessageTicket());
             return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
         }
