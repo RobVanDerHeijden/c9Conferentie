@@ -3,6 +3,22 @@
 <script>
     
     $(function(){
+        /* ************************ Algemene functies ************************ */
+        /* Verander functie voor change Values van totale prijzen */
+        function changeValues() {
+            var sumMeals = 0;
+            $('.priceMaaltijd').each(function(i, obj) {
+                sumMeals += $(this).val()*1;
+            });
+            var sumTickets = 0;
+            $('.price').each(function(i, obj) {
+                sumTickets += $(this).val()*1;
+            });
+
+            document.getElementById("totaalTicket").value = sumTickets;
+            document.getElementById("totaalMaaltijd").value = sumMeals;
+            document.getElementById("totaalReservering").value = sumMeals + sumTickets;
+        }
         /* ************************ Ticket ************************ */
         /* Add row ticket */
         $('.addticket').click(function(){
@@ -14,12 +30,16 @@
                 '<td><select name="ticket[]" class="ticket">'+ ticket +'</select></td>' + 
         		'<td><input type="text" name="price[]" class="price" value="45" readonly></td>' + 
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
-            $('.body_ticket').append(newTicketRow);		
+            $('.body_ticket').append(newTicketRow);	
+            
+            changeValues();
         });
     
         /* Delete selected row ticket */
         $(".body_ticket").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
+            
+            changeValues();
         });
         
         /* Change value depending on type Ticket */
@@ -27,11 +47,8 @@
             var newTicketRow = $(this).parent().parent();
             var prijs = newTicketRow.find(".ticket option:selected").attr("ticket-prijs");
             newTicketRow.find(".price").val(prijs);
-            
-            var maaltijd = newTicketRow.find(".priceMaaltijd").val();
-            var ticket = newTicketRow.find(".price").val();
-            var totaal = parseInt(maaltijd*1) + parseInt(ticket*1);
-            newTicketRow.find(".amount").val(totaal);
+
+            changeValues();
         });
         
         
@@ -42,15 +59,19 @@
             var n = ($('.body_maaltijd tr').length-0)+1;
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
         		'<td><select name="maaltijd[]" class="maaltijd">'+ maaltijd +'</select></td>' + 
-        		'<td><input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarish" value="'+n+'" style="width:25px;height:25px"></td>' +
+        		'<td><input type="hidden" name="vegetarisch[]" value="Nee" /> <input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarisch[]" value="Ja" style="width:25px;height:25px"></td>' +
             	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
-            $('.body_maaltijd').append(newTicketRow);		
+            $('.body_maaltijd').append(newTicketRow);
+            
+            changeValues();
         });
         
         /* Delete selected row maaltijd */
         $(".body_maaltijd").delegate(".delete", "click", function() {
             $(this).parent().parent().remove();
+            
+            changeValues();
         });
         
         /* Change value depending on type Maaltijd */
@@ -58,74 +79,46 @@
             var newTicketRow = $(this).parent().parent();
             var prijs = newTicketRow.find(".maaltijd option:selected").attr("maaltijd-prijs");
             
-            var x = newTicketRow.find(".vegetarischCheck");
-            if (x.attr('checked',true))
-            {
-               // var x = $('.b').attr('checked',true);
-                //alert(" yo");
-                prijs = prijs * 0.9;
-                
-            } else {
-                x.attr('checked',false)
-            }
-            //$('.b').attr('checked',true);
-            //window.alert(x);
-            //document.getElementById("vegetarisch").checked;
-            //if(x.checked === true) {
-            //    prijs = prijs * 0.9;
-            //}
             newTicketRow.find(".priceMaaltijd").val(prijs);
             
-            var sumMeals = 0;
-            $('.priceMaaltijd').each(function(i, obj) {
-                sumMeals += $(this).val()*1;
-            });
-            var sumTickets = 0;
-            $('.price').each(function(i, obj) {
-                sumTickets += $(this).val()*1;
-            });
-            
-            //window.alert(sumTickets);
-            
-            document.getElementById("totaalMaaltijd").value = sumMeals;
+            changeValues();
         });
-        //
         
-        $('.totaaldiv').delegate(".amount", "change", function() {
-            var newTicketRow = $(this).parent().parent();
-            var maaltijd = newTicketRow.find(".priceMaaltijd").val();
-            var ticket = newTicketRow.find(".price").val();
-            var totaal = parseInt(maaltijd) + parseInt(ticket);
-            newTicketRow.find(".amount").val(totaal);
+        /* Change value depending on if Vegetarisch is checked */
+        $('.body_maaltijd').delegate(".vegetarischCheck", "change", function() {
+            if ($(this).is(':checked')) {
+                var newTicketRow = $(this).parent().parent();
+                var prijs = newTicketRow.find(".priceMaaltijd").val();
+                prijs = prijs * 0.9;
+                
+                newTicketRow.find(".priceMaaltijd").val(prijs);
+                
+                changeValues();
+                //console.log('Checked');
+            } else {
+                var newTicketRow = $(this).parent().parent();
+                var prijs = newTicketRow.find(".maaltijd option:selected").attr("maaltijd-prijs");
+                
+                newTicketRow.find(".priceMaaltijd").val(prijs);
+                
+                changeValues();
+                //console.log('Unchecked');
+            }
         });
     });
-    
-    
     
 </script>
 
 <section class="reservering"> 
-    <h1> Ticket Reserveren </h1>
+    <h1> Tickets Reserveren </h1>
     <div class="col-md-6">
         <table>
-            <tr>
-                <th>Ticket</th><th>Prijs in €</th><th>Beschikbaar</th>
-            </tr>
-            <tr>
-                <td>Vrijdag</td><td>€45</td><td>250</td>
-            </tr>
-            <tr>
-                <td>Zaterdag</td><td>€60</td><td>250</td>
-            </tr>
-            <tr>
-                <td>Zondag</td><td>€30</td><td>250</td>
-            </tr>
-            <tr>
-                <td>Passe-partout</td><td>€100</td>
-            </tr>
-            <tr>
-                <td>weekend</td><td>€80</td>
-            </tr>
+            <tr><th>Ticket</th>         <th>Prijs in €</th> <th>Beschikbaar</th></tr>
+            <tr><td>Vrijdag</td>        <td>€45</td>        <td>250</td></tr>
+            <tr><td>Zaterdag</td>       <td>€60</td>        <td>250</td></tr>
+            <tr><td>Zondag</td>         <td>€30</td>        <td>250</td></tr>
+            <tr><td>Passe-partout</td>  <td>€100</td></tr>
+            <tr><td>weekend</td>        <td>€80</td></tr>
         </table>
     </div>
     <div class="col-md-6">
@@ -213,7 +206,10 @@
                                     @endforeach
                                 </select>
                             </td>
-                            <td><input type="checkbox" class="vegetarischCheck" name="vegetarisch" value="1" style="width:25px;height:25px"></td>
+                            <td>
+                                <input type="hidden" name="vegetarisch[]" value="Nee" />
+                                <input type="checkbox" class="vegetarischCheck" name="vegetarisch[]" style="width:25px;height:25px" value="Ja">
+                            </td>
                             <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>
                         </tr>
                     </tbody>
@@ -223,75 +219,63 @@
             <div class ="totaaldiv col-md-12">
                 <br>
                 <center>
-                <label for="totaal">
-                    Totaal: 
-                </label>
-                <input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="65" readonly>
+                    <label for="totaal">Totaal: </label>
+                    <input type="text" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="65" readonly>
+                    <input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="20" readonly>
+                    <input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="85" readonly>
                 </center>
             </div>
             
             <div class ="input-group col-md-12">
-                <br>
-                <label for="naam">
-                    Voornaam: 
-                </label>
-                <input type="text" name="naam" id="naam" placeholder="je naam"/>
+                <table>
+                    <tr>
+                        <td><label for="naam">Voornaam: </label></td>
+                        <td><input type="text" name="naam" id="naam" placeholder="je naam"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="tussenvoegsel">Tussenvoegsel: </label></td>
+                        <td><input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="tussenvoegsel"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="achternaam">Achternaam: </label></td>
+                        <td><input type="text" name="achternaam" id="achternaam" placeholder="achternaam"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email: </label></td>
+                        <td><input type="text" name="email" id="email" placeholder="email"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="telnummer">Telnummer: </label></td>
+                        <td><input type="text" name="telnummer" id="telnummer" placeholder="telnummer"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="adres">Adres: </label></td>
+                        <td><input type="text" name="adres" id="adres" placeholder="adres"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="woonplaats">Woonplaats: </label></td>
+                        <td><input type="text" name="woonplaats" id="woonplaats" placeholder="woonplaats"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="betaalmethode">Betaalmethode: </label></td>
+                        <td>
+                            <select name="betaalmethode" id="betaalmethode">
+                                <option value="IDeal">IDeal</option>
+                                <option value="PayPal">PayPal</option>
+                                <option value="Creditcard">Creditcard</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit" class="btn">Bevestigen</button></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
-            
-            <div class ="input-group">
-                <label for="tussenvoegsel">
-                    Tussenvoegsel: 
-                </label>
-                <input type="text" name="tussenvoegsel" id="tussenvoegsel" placeholder="tussenvoegsel"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="achternaam">
-                    Achternaam: 
-                </label>
-                <input type="text" name="achternaam" id="achternaam" placeholder="achternaam"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="email">
-                    Email: 
-                </label>
-                <input type="text" name="email" id="email" placeholder="email"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="telnummer">
-                    Telnummer: 
-                </label>
-                <input type="text" name="telnummer" id="telnummer" placeholder="telnummer"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="adres">
-                    Adres: 
-                </label>
-                <input type="text" name="adres" id="adres" placeholder="adres"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="woonplaats">
-                    Woonplaats: 
-                </label>
-                <input type="text" name="woonplaats" id="woonplaats" placeholder="woonplaats"/>
-            </div>
-            
-            <div class ="input-group">
-                <label for="betaalmethode">
-                    Betaalmethode: 
-                </label>
-                <select name="betaalmethode" id="betaalmethode">
-                    <option value="IDeal">IDeal</option>
-                    <option value="PayPal">PayPal</option>
-                    <option value="Creditcard">Creditcard</option>
-                </select>
-            </div>
-            <button type="submit" class="btn">Bevestigen</button>
-            <input type="hidden" name="_token" value="{{ Session::token() }}"/>
         </form>
     </div>
 </section>

@@ -39,10 +39,11 @@ class ReserveringController extends Controller
             $reservering = array('id' => DB::table('reserverings')->max('id') + 1,
                 'idUser' => $id,
                 'betaalmethode' => $post["betaalmethode"],
-                'prijs' => 1
+                'prijs' => $post["totaalReservering"]
             );
             $idReservering = DB::table('reserverings')->insertgetId($reservering);
                 
+            /* Alle tickets */
             for ($i = 0; $i < count($post["ticket"]); $i++)
             {
                 $ticket = array('id' => DB::table('tickets')->max('id') + 1,
@@ -51,6 +52,34 @@ class ReserveringController extends Controller
                     'barcode' => "123123" . $post["ticket"][$i] . $id
                 );
                 DB::table('tickets')->insert($ticket);
+            }
+            
+            /* Alle maaltijden */
+            // $x is what makes sure that the vegetarisch checkbox is correct with each row
+            $x = 1;
+            for ($i = 0; $i < count($post["maaltijd"]); $i++)
+            {
+                if(isset($post['vegetarisch'][$x]) && $post['vegetarisch'][$x] == 'Ja') 
+                {
+                    //$check = "Ja i: " . $i . " x: " . $x;
+                    $check = "Ja";
+                    $x = $x + 1;
+                }
+                else
+                {
+                    //$check = "Nee i: " . $i . " x: " . $x;
+                    $check = "Nee";
+                } 
+                $x = $x + 1;
+
+                $maaltijd = array('id' => DB::table('maaltijds')->max('id') + 1,
+                    'reservering' => $idReservering,
+                    'soort' => $post["maaltijd"][$i],
+                    'vegetarisch' => $check,
+                    'barcode' => "321321" . $post["maaltijd"][$i] . $id . DB::table('maaltijds')->max('id')
+                );
+                DB::table('maaltijds')->insert($maaltijd);
+                
             }
             
             Event::fire(new MessageTicket());

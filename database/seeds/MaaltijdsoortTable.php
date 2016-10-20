@@ -12,6 +12,7 @@ class MaaltijdsoortTable extends Seeder
      */
     public function run()
     {
+      
         $maaltijdsoort = new Maaltijdsoort();
         $maaltijdsoort->soort = "lunch";
         $maaltijdsoort->prijs = 20;
