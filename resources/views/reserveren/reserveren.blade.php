@@ -58,7 +58,8 @@
             var maaltijd = $('.maaltijd').html();
             var n = ($('.body_maaltijd tr').length-0)+1;
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
-        		'<td><select name="maaltijd[]" class="maaltijd">'+ maaltijd +'</select></td>' + 
+        		'<td><select name="maaltijd[]" class="maaltijd">@foreach($maaltijden as $maaltijd)' + 
+        		'<option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>@endforeach</select></td>' + 
         		'<td><input type="hidden" name="vegetarisch[]" value="Nee" /> <input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarisch[]" value="Ja" style="width:25px;height:25px"></td>' +
             	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
         		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
@@ -197,10 +198,12 @@
                         <label for="maaltijd">
                             Kies een maaltijd: 
                         </label><br>
+                        <!--
                         <tr>
                             <th class="no">1</th>
                             <td>
                                 <select name="maaltijd[]" class="maaltijd">
+                                    <option>geen maaltijd</option>
                                     @foreach($maaltijden as $maaltijd)
                                         <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>
                                     @endforeach
@@ -210,19 +213,29 @@
                                 <input type="hidden" name="vegetarisch[]" value="Nee" />
                                 <input type="checkbox" class="vegetarischCheck" name="vegetarisch[]" style="width:25px;height:25px" value="Ja">
                             </td>
-                            <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>
+                            <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="0" readonly></td>
                         </tr>
+                        -->
                     </tbody>
                 </table>
             </div>
             
             <div class ="totaaldiv col-md-12">
-                <br>
                 <center>
-                    <label for="totaal">Totaal: </label>
-                    <input type="text" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="65" readonly>
-                    <input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="20" readonly>
-                    <input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="85" readonly>
+                    <table>
+                        <tr>
+                            <td><label for="totaal">Totaal ticket: </label></td>
+                            <td><input type="text" id="totaalTicket" name="totaalTicket" class="totaalTicket" value="45" readonly></td>
+                        </tr>
+                        <tr>
+                            <td><label for="totaal">Totaal maaltijd: </label></td>
+                            <td><input type="text" id="totaalMaaltijd" name="totaalMaaltijd" class="totaalMaaltijd" value="0" readonly></td>
+                        </tr>
+                        <tr>
+                            <td><label for="totaal">Totaal reservering: </label></td>
+                            <td><input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="45" readonly></td>
+                        </tr>
+                    </table>
                 </center>
             </div>
             

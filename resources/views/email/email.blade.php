@@ -1,39 +1,90 @@
-U heeft een reservering gemaakt op Conferentie - ICT.<br />
-<br />
+<?php $reserveringNr = DB::table('reserverings')->max('id'); ?>
+<?php $totalTickets = DB::table('tickets')->where('reservering', $reserveringNr)->get(); ?>
+<?php $totalMaaltijden = DB::table('maaltijds')->where('reservering', $reserveringNr)->get(); ?>
+<?php $reservering = DB::table('reserverings')->where('id', $reserveringNr)->get(); ?>
+<?php $userId = DB::table('users')->where('id', $reservering[0]->idUser)->get(); ?>
+Beste <u>{{ $userId[0]->naam }}</u>.<br>
+<br>
+U heeft een reservering gemaakt op Conferentie - ICT.<br>
+<br>
 Uw bestelling is bevestigd!<br>
 <br>
 <div style="background-color:rgba(216, 216, 216, 0.5);">
-    <?php $test = DB::table('reserverings')->max('id'); ?>
-    <strong>Uw tickets:</strong><br>
+    Reservering nr: {{ $reserveringNr }}<br>
+    User nr: {{ $reservering[0]->idUser }}<br>
     <br>
-    <table width="350" border="1" cellspacing="0" cellpadding="2">
+    <strong>Uw tickets:</strong><br>
+    <!-- Tabel informatie tickets -->
+    <table width="400" border="1" cellspacing="0" cellpadding="5">
         <tr>
             <td>Nr.</td>
-            <td>Soort</td>
-            <td>Prijsticket</td>
-            <td>Maaltijd</td>
-            <td>Prijsmaaltijd</td>
-            <td>Totaal</td>
+            <td>Soort ticket</td>
+            <td>Prijs ticket</td>
+        </tr>
+        <?php $nrTicket = 1; $totaalPrijsTickets = 0; ?>
+        @foreach ($totalTickets as $ticket)
+            <?php $ticketSoort = DB::table('ticketsoorts')->where('id', $ticket->soort)->get(); ?>
+            <tr>
+                <td>{{ $nrTicket }}</td>
+                <td>{{ $ticketSoort[0]->soort }}</td>
+                <td>€ {{ $ticketSoort[0]->prijs }}</td>
+            </tr>
+            <?php 
+                $nrTicket = $nrTicket + 1; 
+                $totaalPrijsTickets = $totaalPrijsTickets + $ticketSoort[0]->prijs; 
+            ?>
+        @endforeach
+        <tr>
+            <td colspan="2">Totaal Tickets:</td>
+            <td><strong>€ {{ $totaalPrijsTickets }}</strong></td>
+        </tr>
+    </table><br>
+    <br>
+    <strong>Uw maaltijden:</strong><br>
+    <!-- Tabel informatie maaltijden -->
+    <table width="400" border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <td>Nr.</td>
+            <td>Soort maaltijd</td>
+            <td>Prijs maaltijd</td>
+        </tr>
+        <?php $nrMaaltijd = 1; $totaalPrijsMaaltijden = 0; ?>
+        @foreach ($totalMaaltijden as $maaltijd)
+            <?php $maaltijdSoort = DB::table('maaltijdsoorts')->where('id', $maaltijd->soort)->get(); ?>
+            <tr>
+                <td>{{ $nrMaaltijd }}</td>
+                <td>{{ $maaltijdSoort[0]->soort }}</td>
+                <td>€ {{ $maaltijdSoort[0]->prijs }}</td>
+            </tr>
+            <?php 
+                $nrMaaltijd = $nrMaaltijd + 1; 
+                $totaalPrijsMaaltijden = $totaalPrijsMaaltijden + $maaltijdSoort[0]->prijs; 
+            ?>
+        @endforeach
+        <tr>
+            <td colspan="2">Totaal Maaltijden:</td>
+            <td><strong>€ {{ $totaalPrijsMaaltijden }}</strong></td>
+        </tr>
+    </table><br>
+    <br>
+    
+    <table width="400" border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <td colspan="2">Totaal Tickets:</td>
+            <td>€ {{ $totaalPrijsTickets }}</td>
         </tr>
         <tr>
-            <td>1</td>
-            <td>Zaterdag</td>
-            <td>50</td>
-            <td>Diner</td>
-            <td>30</td>
-            <td>80</td>
+            <td colspan="2">Totaal Maaltijden:</td>
+            <td>€ {{ $totaalPrijsMaaltijden }}</td>
         </tr>
         <tr>
-            <td>2</td>
-            <td>Zondag</td>
-            <td>30</td>
-            <td>Combo</td>
-            <td>50</td>
-            <td>80</td>
+            <td colspan="2">Totaal Reservering:</td>
+            <td><strong>€ {{ $totaalPrijsTickets + $totaalPrijsMaaltijden }}</strong></td>
         </tr>
     </table>
 </div>
-<?php echo $test; ?>
+<br>
+Hartelijk dank voor uw bestelling <u>{{ $userId[0]->naam }}</u>, wij wensen u een plezierige conferentie toe!<br>
 <br>
 Mvg,<br>
 Bunky™ corp.

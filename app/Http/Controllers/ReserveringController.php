@@ -49,37 +49,38 @@ class ReserveringController extends Controller
                 $ticket = array('id' => DB::table('tickets')->max('id') + 1,
                     'reservering' => $idReservering,
                     'soort' => $post["ticket"][$i],
-                    'barcode' => "123123" . $post["ticket"][$i] . $id
+                    'barcode' => "666" . $post["ticket"][$i] . $id . DB::table('tickets')->max('id')
                 );
                 DB::table('tickets')->insert($ticket);
             }
             
             /* Alle maaltijden */
-            // $x is what makes sure that the vegetarisch checkbox is correct with each row
-            $x = 1;
-            for ($i = 0; $i < count($post["maaltijd"]); $i++)
-            {
-                if(isset($post['vegetarisch'][$x]) && $post['vegetarisch'][$x] == 'Ja') 
+            if (isset($post["maaltijd"])) {
+                // $x is what makes sure that the vegetarisch checkbox is correct with each row
+                $x = 1;
+                for ($i = 0; $i < count($post["maaltijd"]); $i++)
                 {
-                    //$check = "Ja i: " . $i . " x: " . $x;
-                    $check = "Ja";
+                    if(isset($post['vegetarisch'][$x]) && $post['vegetarisch'][$x] == 'Ja') 
+                    {
+                        //$check = "Ja i: " . $i . " x: " . $x;
+                        $check = "Ja";
+                        $x = $x + 1;
+                    }
+                    else
+                    {
+                        //$check = "Nee i: " . $i . " x: " . $x;
+                        $check = "Nee";
+                    } 
                     $x = $x + 1;
+    
+                    $maaltijd = array('id' => DB::table('maaltijds')->max('id') + 1,
+                        'reservering' => $idReservering,
+                        'soort' => $post["maaltijd"][$i],
+                        'vegetarisch' => $check,
+                        'barcode' => "999" . $post["maaltijd"][$i] . $id . DB::table('maaltijds')->max('id')
+                    );
+                    DB::table('maaltijds')->insert($maaltijd);
                 }
-                else
-                {
-                    //$check = "Nee i: " . $i . " x: " . $x;
-                    $check = "Nee";
-                } 
-                $x = $x + 1;
-
-                $maaltijd = array('id' => DB::table('maaltijds')->max('id') + 1,
-                    'reservering' => $idReservering,
-                    'soort' => $post["maaltijd"][$i],
-                    'vegetarisch' => $check,
-                    'barcode' => "321321" . $post["maaltijd"][$i] . $id . DB::table('maaltijds')->max('id')
-                );
-                DB::table('maaltijds')->insert($maaltijd);
-                
             }
             
             Event::fire(new MessageTicket());
