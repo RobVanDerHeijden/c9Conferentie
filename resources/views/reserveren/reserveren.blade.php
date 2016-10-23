@@ -146,10 +146,7 @@
     </div>
     <br>
     <div class="col-md-12">
-        @include('includes.info-box')
-        
         <form  method="post" action='{{route('postreserveringarray')}}' id='reserveren'>
-            
             <!-- ******* Ticket ******* -->
             <div class="col-md-6">
                 <button type="button" class="btn addticket" value="+">Ticket toevoegen +</button><br>
@@ -281,7 +278,7 @@
                     </tr>
                     <tr>
                         <td><button type="submit" class="btn">Bevestigen</button></td>
-                        <td></td>
+                        <td>@include('includes.info-box')</td>
                     </tr>
                     <tr>
                         <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>

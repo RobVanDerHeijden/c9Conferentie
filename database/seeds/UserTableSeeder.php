@@ -12,6 +12,19 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $user = new User();
+        $user->naam = "Rob";
+        $user->tussenvoegsel = "van";
+        $user->achternaam = "der Heijden";
+        $user->email = "bunky_rob@hotmail.com";
+        $user->telnummer = "0621819898";
+        $user->adres = "Burgemeester van Erpstraat 29 A";
+        $user->woonplaats = "Berghem";
+        $user->gebruikersnaam = "FriendlyRob";
+        $user->password =bcrypt("rob");
+        $user->rol = "organisator";
+        $user->save();
+        
+        $user = new User();
         $user->naam = "Danzel";
         $user->tussenvoegsel = "van";
         $user->achternaam = "DANNYYYY";

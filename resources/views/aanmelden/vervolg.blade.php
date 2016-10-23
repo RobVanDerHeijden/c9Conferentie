@@ -1,8 +1,7 @@
 @extends('layouts.master')
 @section('content')
-vervolg aanmelden<br>
+U bent aangemeld!<br>
 
-
-
-<a href="/aanmelden">terug naar aanmelden</a>
+<a href="/aanmelden">Afmelden</a>
+@include('includes.info-box')
 @endsection

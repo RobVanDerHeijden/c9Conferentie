@@ -60,6 +60,8 @@ Route::group(['prefix' => 'aanmelden'], function() {
         return view('aanmelden.aanmelden');
     })->name('aanmelden');
     
+    Route::post('/postaanmeldarray', ['uses' => 'AanmeldController@postAanmeldArray', 'as' => 'postaanmeldarray']);
+    
     Route::get('/vervolg', function () {
         return view('aanmelden.vervolg');
     })->name('vervolgaanmelden');

@@ -54,3 +54,12 @@ body {
     bottom: 10px;
     z-index: -1;
 }
+
+.fail{
+    background-color: red;
+}
+
+.success{
+    background-color: green;
+}
+    

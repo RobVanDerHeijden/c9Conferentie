@@ -20,6 +20,11 @@ class ReserveringController extends Controller
     }
     
     public function postReserveringArray(Request $request){
+        /* Validation */
+        /*$this->validate($request, [
+            'naam' => 'required',
+            'email' => 'required|email'
+        ]);*/
         $post = $request->all();
         //var_dump($post);
         /* ************* USER *********** */
