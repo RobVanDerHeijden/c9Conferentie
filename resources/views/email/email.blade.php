@@ -49,16 +49,24 @@ Uw bestelling is bevestigd!<br>
             <td>Prijs maaltijd</td>
         </tr>
         <?php $nrMaaltijd = 1; $totaalPrijsMaaltijden = 0; ?>
+        <?php $barcodes = ""; ?>
         @foreach ($totalMaaltijden as $maaltijd)
             <?php $maaltijdSoort = DB::table('maaltijdsoorts')->where('id', $maaltijd->soort)->get(); ?>
+            <?php $maaltijdPrijs = $maaltijdSoort[0]->prijs ?>
+            <?php if ($maaltijd->vegetarisch == "Ja") {
+              $maaltijdPrijs = $maaltijdPrijs * 0.9;  
+            }
+            ?>
             <tr>
                 <td>{{ $nrMaaltijd }}</td>
                 <td>{{ $maaltijdSoort[0]->soort }}</td>
-                <td>€ {{ $maaltijdSoort[0]->prijs }}</td>
+                <td>€ {{ $maaltijdPrijs }}</td>
             </tr>
             <?php 
+                $totaalPrijsMaaltijden = $totaalPrijsMaaltijden + $maaltijdPrijs;
                 $nrMaaltijd = $nrMaaltijd + 1; 
-                $totaalPrijsMaaltijden = $totaalPrijsMaaltijden + $maaltijdSoort[0]->prijs; 
+                //$totaalPrijsMaaltijden = $totaalPrijsMaaltijden + $maaltijdSoort[0]->prijs; 
+                $barcodes = $barcodes . $maaltijd->barcode . "  ";
             ?>
         @endforeach
         <tr>
@@ -82,6 +90,11 @@ Uw bestelling is bevestigd!<br>
             <td><strong>€ {{ $totaalPrijsTickets + $totaalPrijsMaaltijden }}</strong></td>
         </tr>
     </table>
+    
+    <div class="visible-print text-center">
+        <p>Barcode 1:</p>
+        {!! QrCode::size(100)->generate("Uw barcode is:" . $barcodes ); !!}
+    </div>
 </div>
 <br>
 Hartelijk dank voor uw bestelling <u>{{ $userId[0]->naam }}</u>, wij wensen u een plezierige conferentie toe!<br>
