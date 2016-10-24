@@ -50,6 +50,7 @@ Uw bestelling is bevestigd!<br>
         </tr>
         <?php $nrMaaltijd = 1; $totaalPrijsMaaltijden = 0; ?>
         <?php $barcodes = ""; ?>
+        <?php $qrCodes = array(); ?>
         @foreach ($totalMaaltijden as $maaltijd)
             <?php $maaltijdSoort = DB::table('maaltijdsoorts')->where('id', $maaltijd->soort)->get(); ?>
             <?php $maaltijdPrijs = $maaltijdSoort[0]->prijs ?>
@@ -65,7 +66,6 @@ Uw bestelling is bevestigd!<br>
             <?php 
                 $totaalPrijsMaaltijden = $totaalPrijsMaaltijden + $maaltijdPrijs;
                 $nrMaaltijd = $nrMaaltijd + 1; 
-                //$totaalPrijsMaaltijden = $totaalPrijsMaaltijden + $maaltijdSoort[0]->prijs; 
                 $barcodes = $barcodes . $maaltijd->barcode . "  ";
             ?>
         @endforeach

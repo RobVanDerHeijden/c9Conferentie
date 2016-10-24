@@ -12,6 +12,38 @@
         <!-- Vrijdag -->
         <div class="col-lg-12">
             <h2><center>Vrijdag</center></h2>
+            <?php $vrijdagQuery = DB::table('slots')->where('dag', "Vrijdag")->get(); ?>
+            <?php $vrijdagZaal1 = DB::table('slots')->where([['dag', 'Vrijdag'],['idZaal',  '1'],])->get(); ?>
+            <?php $aantalZaals = DB::table('zaals')->get(); ?>
+            <?php $x = 0; ?>
+            <?php $countPerZaal = count($vrijdagZaal1); ?>
+            
+            <table border='1px' width=100%>
+                <tr>
+                    <td></td>
+                    @foreach($aantalZaals as $zaal)
+                        <td>{{ $zaal->zaalnaam }}</td>
+                    @endforeach
+                </tr>
+                @foreach($vrijdagZaal1 as $vrijdagSlot)
+                    <tr>
+                        <td>{{ $vrijdagSlot->beginTijd }} - {{ $vrijdagSlot->eindTijd }}</td>
+                        <td>ID: {{ $vrijdagQuery[$x]->id }} Status: {{ $vrijdagQuery[$x]->idStatus }}</td>
+                        <td>ID: {{ $vrijdagQuery[$x+($countPerZaal*1)]->id }} 
+                                    Status: {{ $vrijdagQuery[$x+($countPerZaal*1)]->idStatus }}</td>
+                        <td>ID: {{ $vrijdagQuery[$x+($countPerZaal*2)]->id }} 
+                                    Status: {{ $vrijdagQuery[$x+($countPerZaal*2)]->idStatus }}</td>
+                        <td>ID: {{ $vrijdagQuery[$x+($countPerZaal*3)]->id }} 
+                                    Status: {{ $vrijdagQuery[$x+($countPerZaal*3)]->idStatus }}</td>
+                    </tr>
+                    <?php $x = $x + 1; ?>
+                @endforeach
+            </table>    
+        </div>
+        
+        <!-- Vrijdag -->
+        <div class="col-lg-12">
+            <h2><center>Vrijdag</center></h2>
             <table border='1px' width=100%>
                 <tr>
                     <th></th><th>Zaal 1</th><th>Zaal 2</th><th>Zaal 3</th><th>Zaal 4</th>
