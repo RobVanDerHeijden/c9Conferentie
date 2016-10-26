@@ -7,12 +7,15 @@
             <li><a href="/reserveren">Reserveren</a></li>
             <li><a href="/aanmelden">Aanmelden</a></li>
             <!--<li><a href="/registrerenslot">Registreren slot</a></li>-->
-            <li><a href="/connect">connect</a></li>
+            <!--<li><a href="/connect">connect</a></li>-->
             @if(!Auth::check())
             <li><a href="{{route('user.login')}}">login</a></li>
             @endif
             @if(Auth::check())
             <li><a href="{{route('user.logout')}}">logout</a></li>
+            @endif
+            @if(Auth::check())
+            <li><a href="/organisator/dashboard">Dashboard</a></li>
             @endif
         </ul>
     </nav>

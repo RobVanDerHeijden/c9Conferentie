@@ -9,15 +9,20 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class MessageTicket extends Event
 {
     use SerializesModels;
+    public $ticket = [];
+    public $maaltijd = [];
+    public $user = [];
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($ticket, $maaltijd, $user)
     {
-        //
+        $this->ticket = $ticket;
+        $this->maaltijd = $maaltijd;
+        $this->user = $user;
     }
 
     /**

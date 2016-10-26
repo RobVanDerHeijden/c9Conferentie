@@ -98,6 +98,8 @@ Route::group(['prefix' => 'aanmelden'], function() {
     
     Route::post('/postaanmelding', ['uses' => 'AanmeldController@postaanmelding', 'as' => 'postaanmelding']);
     
-    Route::post('/postacceptaanmelding', ['uses' => 'BeoordeelAanmeldingController@postaanmelding', 'as' => 'postacceptaanmelding']);
+    Route::post('/postacceptaanmelding', ['uses' => 'BeoordeelAanmeldingController@postacceptaanmelding', 'as' => 'postacceptaanmelding']);
+    
+    Route::post('/postdeclineaanmelding', ['uses' => 'BeoordeelAanmeldingController@postdeclineaanmelding', 'as' => 'postdeclineaanmelding']);
     
 });

@@ -88,7 +88,7 @@ class ReserveringController extends Controller
                 }
             }
             
-            Event::fire(new MessageTicket());
+            Event::fire(new MessageTicket($ticket, $maaltijd, $user));
             return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
         }
     }

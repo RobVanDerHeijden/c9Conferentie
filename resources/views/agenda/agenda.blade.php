@@ -59,7 +59,7 @@
                                 $agendaSlotStatus = "slot_status_bezet";
                             }
                     ?>
-                    <td class= {{ $agendaSlotStatus }}>ID: {{ $vrijdagQuery[$x+($countPerZaal*1)]->id }} {{ $statusText[0]->status }}</td>
+                    <td class= {{ $agendaSlotStatus }}>ID: {{ $vrijdagQuery[$x+($countPerZaal*2)]->id }} {{ $statusText[0]->status }}</td>
                     <?php
                         $statusText = DB::table('statuses')->where('idStatus', $vrijdagQuery[$x+($countPerZaal*3)]->idStatus)->get();
                         if($vrijdagQuery[$x+($countPerZaal*3)]->idStatus == 1) {
@@ -70,7 +70,7 @@
                                 $agendaSlotStatus = "slot_status_bezet";
                             }
                     ?>
-                    <td class= {{ $agendaSlotStatus }}>ID: {{ $vrijdagQuery[$x+($countPerZaal*1)]->id }} {{ $statusText[0]->status }}</td>
+                    <td class= {{ $agendaSlotStatus }}>ID: {{ $vrijdagQuery[$x+($countPerZaal*3)]->id }} {{ $statusText[0]->status }}</td>
                 </tr>
                 <?php $x = $x + 1; ?>
             @endforeach
