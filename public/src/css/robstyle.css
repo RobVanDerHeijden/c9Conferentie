@@ -63,3 +63,14 @@ body {
     background-color: green;
 }
     
+.slot_status_open {
+    background-color: green;
+}
+
+.slot_status_onder_voorbehoud {
+    background-color: orange;
+}
+
+.slot_status_bezet {
+    background-color: red;
+}

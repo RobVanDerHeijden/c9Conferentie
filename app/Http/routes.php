@@ -15,6 +15,27 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+/*Route::get('/registrerenslot', function () {
+    return view('registrerenslot');
+})->name('registrerenslot');
+*/
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/organisator/dashboard', [
+        'uses' => 'InlogController@getDashboard',
+        'as' => 'dashboard'
+    ]);
+});
+
+Route::get('/organisator/logout', [
+    'uses' => 'InlogController@getLogout',
+    'as' => 'user.logout'
+]);
+
+Route::get('/organisator/login', function () {
+    return view('organisator.organisator-login');
+})->name('user.login');
+    
 Route::get('/test', function () {
     return view('test.test');
 })->name('test');
@@ -60,7 +81,7 @@ Route::group(['prefix' => 'aanmelden'], function() {
         return view('aanmelden.aanmelden');
     })->name('aanmelden');
     
-    Route::post('/postaanmeldarray', ['uses' => 'AanmeldController@postAanmeldArray', 'as' => 'postaanmeldarray']);
+    Route::post('/postInlogArray', ['uses' => 'InlogController@postInlogArray', 'as' => 'postInlogArray']);
     
     Route::get('/vervolg', function () {
         return view('aanmelden.vervolg');
@@ -73,4 +94,10 @@ Route::group(['prefix' => 'aanmelden'], function() {
     Route::get('/bevestiging', function () {
         return view('aanmelden.bevestiging');
     })->name('bevestiging');
+    
+    
+    Route::post('/postaanmelding', ['uses' => 'AanmeldController@postaanmelding', 'as' => 'postaanmelding']);
+    
+    Route::post('/postacceptaanmelding', ['uses' => 'BeoordeelAanmeldingController@postaanmelding', 'as' => 'postacceptaanmelding']);
+    
 });

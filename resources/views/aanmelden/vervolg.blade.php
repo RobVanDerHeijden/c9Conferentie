@@ -1,7 +1,5 @@
 @extends('layouts.master')
 @section('content')
-U bent aangemeld!<br>
-
-<a href="/aanmelden">Afmelden</a>
-@include('includes.info-box')
+    aanmelden vervolg<br>
+    <a href="/aanmelden">Terug</a>
 @endsection
