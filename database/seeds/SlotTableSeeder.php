@@ -43,7 +43,7 @@ class SlotTableSeeder extends Seeder
         
         $slot = new Slot();
         $slot->idZaal = 1;
-        $slot->idStatus = 1;
+        $slot->idStatus = 2;
         $slot->agenda = 1;
         $slot->beginTijd = "20:00";
         $slot->eindTijd = "21:00";
@@ -135,7 +135,7 @@ class SlotTableSeeder extends Seeder
         
         $slot = new Slot();
         $slot->idZaal = 3;
-        $slot->idStatus = 1;
+        $slot->idStatus = 2;
         $slot->agenda = 1;
         $slot->beginTijd = "20:00";
         $slot->eindTijd = "21:00";
@@ -239,7 +239,7 @@ class SlotTableSeeder extends Seeder
         
         $slot = new Slot();
         $slot->idZaal = 1;
-        $slot->idStatus = 1;
+        $slot->idStatus = 2;
         $slot->agenda = 1;
         $slot->beginTijd = "15:30";
         $slot->eindTijd = "16:30";
@@ -521,7 +521,7 @@ class SlotTableSeeder extends Seeder
         
         $slot = new Slot();
         $slot->idZaal = 4;
-        $slot->idStatus = 1;
+        $slot->idStatus = 2;
         $slot->agenda = 1;
         $slot->beginTijd = "21:30";
         $slot->eindTijd = "22:30";

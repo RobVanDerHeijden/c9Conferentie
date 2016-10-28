@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Reservering;
+use App\Ticket;
+use PDF;
 use App\Http\Requests;
 use App\Events\MessageTicket;
 use Illuminate\Support\Facades\DB;
@@ -48,15 +50,17 @@ class ReserveringController extends Controller
             );
             $idReservering = DB::table('reserverings')->insertgetId($reservering);
                 
+            $ticket = [];    
             /* Alle tickets */
             for ($i = 0; $i < count($post["ticket"]); $i++)
             {
-                $ticket = array('id' => DB::table('tickets')->max('id') + 1,
+                $ticket[] = Ticket::create([
+                    'id' => DB::table('tickets')->max('id') + 1,
                     'reservering' => $idReservering,
                     'soort' => $post["ticket"][$i],
                     'barcode' => "666" . $post["ticket"][$i] . $id . DB::table('tickets')->max('id')
-                );
-                DB::table('tickets')->insert($ticket);
+                ]);
+                
             }
             
             /* Alle maaltijden */
@@ -88,7 +92,9 @@ class ReserveringController extends Controller
                 }
             }
             
-            Event::fire(new MessageTicket($ticket, $maaltijd, $user));
+            $pdf = PDF::loadView('pdf.pdf', ["ticketarray" => $ticket]);
+            
+            Event::fire(new MessageTicket($ticket, $maaltijd, $user, $pdf));
             return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
         }
     }

@@ -102,4 +102,11 @@ Route::group(['prefix' => 'aanmelden'], function() {
     
     Route::post('/postdeclineaanmelding', ['uses' => 'BeoordeelAanmeldingController@postdeclineaanmelding', 'as' => 'postdeclineaanmelding']);
     
+    Route::post('/postTegenbod', ['uses' => 'BeoordeelAanmeldingController@postTegenbod', 'as' => 'postTegenbod']);
+    
+    Route::post('/postAcceptTegenbod', ['uses' => 'BeoordeelAanmeldingController@postAcceptTegenbod', 'as' => 'postAcceptTegenbod']);
+    
+    Route::post('/postWeigerTegenbod', ['uses' => 'BeoordeelAanmeldingController@postWeigerTegenbod', 'as' => 'postWeigerTegenbod']);
+    
+    
 });

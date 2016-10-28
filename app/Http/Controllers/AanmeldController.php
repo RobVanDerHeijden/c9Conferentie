@@ -15,10 +15,10 @@ class AanmeldController extends Controller
 {
     public function postAanmelding(Request $request)
     {
-        /*$this->validate($request, [
+        $this->validate($request, [
             'naam' => 'required',
-            'email' => 'required|email'
-        ]);*/
+            //'email' => 'required|email'
+        ]);
            
         $user = new User();
         $user->id = DB::table('users')->max('id') + 1;
@@ -34,11 +34,12 @@ class AanmeldController extends Controller
         
         $aanmelding = new Aanmelding();
         $aanmelding->idSlot = $request["slot1"];
+        $aanmelding->voorkeur = $request["slot-voorkeur"];
         $aanmelding->idUser = $user->id;
         $aanmelding->onderwerp = $request["onderwerp"];
         $aanmelding->omschrijving = $request["omschrijving"];
         $aanmelding->wensen = $request["wensen"];
-        $aanmelding->voorkeur = $request["slot-voorkeur"];
+        $aanmelding->kosten = $request["kosten"];
         $aanmelding->save();
         
         

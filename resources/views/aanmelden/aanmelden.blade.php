@@ -4,6 +4,7 @@
 <?php $slotenVoorkeur = DB::table('slots')->where('idStatus', 2)->get(); ?>
 <form  method="post" action='{{route('postaanmelding')}}' id='reserveren'>
     <div class ="input-group col-md-12">
+        @include('includes.info-box')
         <table>
             <tr>
                 <td><label for="slot">Slot: </label></td>
@@ -11,6 +12,18 @@
                     <select name="slot1" class="slot1">
                         @foreach($sloten1 as $slot)
                             <option value="{{ $slot->id }}">{{ $slot->dag }} : {{ $slot->beginTijd }} - {{ $slot->eindTijd }} Zaal[{{ $slot->idZaal }}]</option>
+                        @endforeach
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <td><label for="slot2">Slot voorkeur: </label></td>
+                <td>
+                    <select name="slot-voorkeur" class="slot-voorkeur">
+                        <option value="">Geen voorkeur</option>
+                        @foreach($slotenVoorkeur as $slotVoorkeur)
+                            <option value="{{ $slotVoorkeur->id }}">{{ $slotVoorkeur->dag }} : {{ $slotVoorkeur->beginTijd }} - {{ $slotVoorkeur->eindTijd }} Zaal[{{ $slotVoorkeur->idZaal }}]</option>
                         @endforeach
                     </select>
                 </td>
@@ -65,22 +78,25 @@
                 <td><label for="woonplaats">Woonplaats: </label></td>
                 <td><input type="text" name="woonplaats" id="woonplaats" placeholder="woonplaats"/></td>
             </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+                <td></td>
+            </tr>
             
             <tr>
-                <td><label for="slot2">Slot voorkeur: </label></td>
-                <td>
-                    <select name="slot-voorkeur" class="slot-voorkeur">
-                        <option value="">Geen voorkeur</option>
-                        @foreach($slotenVoorkeur as $slotVoorkeur)
-                            <option value="{{ $slotVoorkeur->id }}">{{ $slotVoorkeur->dag }} : {{ $slotVoorkeur->beginTijd }} - {{ $slotVoorkeur->eindTijd }} Zaal[{{ $slotVoorkeur->idZaal }}]</option>
-                        @endforeach
-                    </select>
-                </td>
+                <td>Indien gewenst kan je kosten vragen.</td>
+                <td></td>
+            </tr>
+            
+            <tr>
+                <td><label for="kosten">Kosten (tussen 0 and 25000):</label></td>
+                <td><input type="number" name="kosten" min="0" max="25000" step="0.01"></td>
             </tr>
 
             <tr>
                 <td><button type="submit" class="btn">Bevestigen</button></td>
-                <td>@include('includes.info-box')</td>
+                <td></td>
             </tr>
 
             <tr>

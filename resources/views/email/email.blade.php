@@ -22,6 +22,9 @@ Uw bestelling is bevestigd!<br>
             <td>Prijs ticket</td>
         </tr>
         <?php $nrTicket = 1; $totaalPrijsTickets = 0; ?>
+        @foreach($tickets as $ticket)
+            {{ $ticket->barcode }}
+        @endforeach
         @foreach ($totalTickets as $ticket)
             <?php $ticketSoort = DB::table('ticketsoorts')->where('id', $ticket->soort)->get(); ?>
             <tr>
