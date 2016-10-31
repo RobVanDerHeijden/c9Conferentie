@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Reservering;
 use App\Ticket;
+use App\Maaltijd;
 use PDF;
 use App\Http\Requests;
 use App\Events\MessageTicket;
@@ -63,6 +64,7 @@ class ReserveringController extends Controller
                 
             }
             
+            $maaltijd = []; 
             /* Alle maaltijden */
             if (isset($post["maaltijd"])) {
                 // $x is what makes sure that the vegetarisch checkbox is correct with each row
@@ -81,20 +83,22 @@ class ReserveringController extends Controller
                         $check = "Nee";
                     } 
                     $x = $x + 1;
-    
-                    $maaltijd = array('id' => DB::table('maaltijds')->max('id') + 1,
+                    
+                    $maaltijd[] = Maaltijd::create([
+                        'id' => DB::table('maaltijds')->max('id') + 1,
                         'reservering' => $idReservering,
                         'soort' => $post["maaltijd"][$i],
                         'vegetarisch' => $check,
                         'barcode' => "999" . $post["maaltijd"][$i] . $id . DB::table('maaltijds')->max('id')
-                    );
-                    DB::table('maaltijds')->insert($maaltijd);
+                    ]);
+                    //DB::table('maaltijds')->insert($maaltijd);
                 }
             }
-            
+            $aanmelding =  DB::table('aanmeldings')->where('idUser', 1)->first();
+            $users = DB::table('users')->where('id', 1)->first();
             $pdf = PDF::loadView('pdf.pdf', ["ticketarray" => $ticket]);
             
-            Event::fire(new MessageTicket($ticket, $maaltijd, $user, $pdf));
+            Event::fire(new MessageTicket($ticket, $maaltijd, $users, $aanmelding, $pdf));
             return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
         }
     }

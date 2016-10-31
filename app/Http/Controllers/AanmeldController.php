@@ -46,6 +46,6 @@ class AanmeldController extends Controller
         DB::table('slots')->where('id', $request["slot1"])->update(['idStatus' => 2]);
         
         
-        return redirect()->route("vervolgaanmelden")->with(["success" => "U heeft succesvol gereserveerd!"]);
+        return redirect()->route("completeaanmelden")->with(["success" => "U heeft succesvol gereserveerd!"]);
     }
 }

@@ -32,7 +32,6 @@ class BeoordeelAanmeldingController extends Controller
         DB::table('slots')->where('id', $request["aanmelding"])->update(['idStatus' => 1]);
         DB::table('aanmeldings')->where('idSlot', $request["aanmelding"])->delete();
         
-        
         return redirect()->route("dashboard")->with(["success" => "U heeft succesvol een aanmelding verworpen!"]);
     }
     
@@ -62,6 +61,9 @@ class BeoordeelAanmeldingController extends Controller
         $oudBudget = DB::table('sprekerskostens')->first();
         $nieuwBudget = $oudBudget->budget - $kosten;
         DB::table('sprekerskostens')->where('id', 1)->update(['budget' => $nieuwBudget]);
+        // Verander status van slot naar 3 (bezet)
+        $aanmelding = DB::table('aanmeldings')->where('idAanmelding', $request["aanmeldingsId"])->first();
+        DB::table('slots')->where('id', $aanmelding->idSlot)->update(['idStatus' => 3]);
         
         return redirect()->route("aanmelden")->with(["success" => "U heeft succesvol uw aanmelding geaccepteerd, voor een nieuwe prijs!"]);
     }

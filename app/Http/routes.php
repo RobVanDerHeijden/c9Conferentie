@@ -89,7 +89,7 @@ Route::group(['prefix' => 'aanmelden'], function() {
     
     Route::get('/complete', function () {
         return view('aanmelden.complete');
-    })->name('complete');
+    })->name('completeaanmelden');
     
     Route::get('/bevestiging', function () {
         return view('aanmelden.bevestiging');
