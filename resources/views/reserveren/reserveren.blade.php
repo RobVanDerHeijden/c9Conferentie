@@ -115,9 +115,9 @@
     <div class="col-md-6">
         <table>
             <tr><th>Ticket</th>         <th>Prijs in €</th> <th>Beschikbaar</th></tr>
-            <tr><td>Vrijdag</td>        <td>€45</td>        <td>250</td></tr>
-            <tr><td>Zaterdag</td>       <td>€60</td>        <td>250</td></tr>
-            <tr><td>Zondag</td>         <td>€30</td>        <td>250</td></tr>
+            <tr><td>Vrijdag</td>        <td>€45</td>        <td>{{ DB::table('ticketsoorts')->where('id', 1)->value('beschikbaar') }}</td></tr>
+            <tr><td>Zaterdag</td>       <td>€60</td>        <td>{{ DB::table('ticketsoorts')->where('id', 2)->value('beschikbaar') }}</td></tr>
+            <tr><td>Zondag</td>         <td>€30</td>        <td>{{ DB::table('ticketsoorts')->where('id', 3)->value('beschikbaar') }}</td></tr>
             <tr><td>Passe-partout</td>  <td>€100</td></tr>
             <tr><td>weekend</td>        <td>€80</td></tr>
         </table>

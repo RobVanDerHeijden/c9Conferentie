@@ -15,21 +15,28 @@ use Illuminate\Support\Facades\Event;
 
 class ReserveringController extends Controller
 {
+    // Functie die het makkelijker maakt om gegevens van de ticket+maaltijd soort op te halen op de view pagina van reserveren
     public function getReserveringIndex()
     {
-        $query = DB::table('ticketsoorts')->get();
+        // ticket en maaltijd variabelen als alle rijen uit de tabellen ticketsoorts en maaltijdensoorts
+        $ticketquery = DB::table('ticketsoorts')->get();
         $maaltijdquery = DB::table('maaltijdsoorts')->get();
-        return view('reserveren.reserveren')->with(['tickets'=>$query, 'maaltijden'=>$maaltijdquery]);
+        // Geef de variabelen mee aan de view reserveren in de map reserveren als: 'tickets' en 'maaltijden'
+        return view('reserveren.reserveren')->with(['tickets'=>$ticketquery, 'maaltijden'=>$maaltijdquery]);
     }
     
+    // Functie die wordt aangeroepen wanneer een reservering wordt gemaakt (bezoeker drukt op bevestigen+allevalidatie klopt)
     public function postReserveringArray(Request $request){
         /* Validation */
         /*$this->validate($request, [
             'naam' => 'required',
             'email' => 'required|email'
         ]);*/
+        
+        // alle informatie die wordt meegegeven wordt nu omgezet naar variabel $post
         $post = $request->all();
         //var_dump($post);
+        
         /* ************* USER *********** */
         $user = array('id' => DB::table('users')->max('id') + 1,
             'naam' => $post["naam"],
@@ -41,20 +48,32 @@ class ReserveringController extends Controller
             'woonplaats' => $post["woonplaats"],
             'rol' => "bezoeker",
         );
+        // zet de nieuwe user in de database en zet de id van die user in variabele $id
         $id = DB::table('users')->insertgetId($user);
         
+        // Als het id van de user groter is dan 0(zou altijd moeten zijn, anders is er iets mis), voer dan alles hierin uit
         if ($id > 0) {
+            /* ************* RESERVERING *************** */
             $reservering = array('id' => DB::table('reserverings')->max('id') + 1,
                 'idUser' => $id,
                 'betaalmethode' => $post["betaalmethode"],
                 'prijs' => $post["totaalReservering"]
             );
+            // zet de nieuwe reservering in de database en zet de id van die reservering in variabele $idReservering
             $idReservering = DB::table('reserverings')->insertgetId($reservering);
                 
-            $ticket = [];    
-            /* Alle tickets */
+            /* *************** Alle TICKETS *************** */
+            $ticket = [];
+            
+            // Voor ieder gepost ticket
             for ($i = 0; $i < count($post["ticket"]); $i++)
             {
+                // Variabelen voor dagen
+                $vrijdag = DB::table('ticketsoorts')->where('id', 1)->value('beschikbaar');
+                $zaterdag = DB::table('ticketsoorts')->where('id', 2)->value('beschikbaar');
+                $zondag = DB::table('ticketsoorts')->where('id', 3)->value('beschikbaar');
+            
+                // Maak nieuwe ticket aan door middel van de Ticket model
                 $ticket[] = Ticket::create([
                     'id' => DB::table('tickets')->max('id') + 1,
                     'reservering' => $idReservering,
@@ -62,28 +81,52 @@ class ReserveringController extends Controller
                     'barcode' => "666" . $post["ticket"][$i] . $id . DB::table('tickets')->max('id')
                 ]);
                 
+                // Verlaag beschikbaar per dag gebaseerd op soort ticket
+                if ($post["ticket"][$i] == 1) {
+                    DB::table('ticketsoorts')->where('id', 1)->update(['beschikbaar' => ($vrijdag - 1)]);
+                }
+                if ($post["ticket"][$i] == 2) {
+                    DB::table('ticketsoorts')->where('id', 2)->update(['beschikbaar' => ($zaterdag - 1)]);
+                }
+                if ($post["ticket"][$i] == 3) {
+                    DB::table('ticketsoorts')->where('id', 3)->update(['beschikbaar' => ($zondag - 1)]);
+                }
+                if ($post["ticket"][$i] == 4) {
+                    DB::table('ticketsoorts')->where('id', 1)->update(['beschikbaar' => ($vrijdag - 1)]);
+                    DB::table('ticketsoorts')->where('id', 2)->update(['beschikbaar' => ($zaterdag - 1)]);
+                    DB::table('ticketsoorts')->where('id', 3)->update(['beschikbaar' => ($zondag - 1)]);
+                }
+                if ($post["ticket"][$i] == 5) {
+                    DB::table('ticketsoorts')->where('id', 2)->update(['beschikbaar' => ($zaterdag - 1)]);
+                    DB::table('ticketsoorts')->where('id', 3)->update(['beschikbaar' => ($zondag - 1)]);
+                }
             }
             
+            /* *************** Alle MAALTIJDEN *************** */
             $maaltijd = []; 
-            /* Alle maaltijden */
+            // De for loop gaat alleen af wanneer er minstens een maaltijd wordt gepost
             if (isset($post["maaltijd"])) {
                 // $x is what makes sure that the vegetarisch checkbox is correct with each row
                 $x = 1;
+                // Voor ieder geposte maaltijd
                 for ($i = 0; $i < count($post["maaltijd"]); $i++)
                 {
+                    // Als vegetarisch is aangevinkt
                     if(isset($post['vegetarisch'][$x]) && $post['vegetarisch'][$x] == 'Ja') 
                     {
-                        //$check = "Ja i: " . $i . " x: " . $x;
+                        // Wel vegetarisch
                         $check = "Ja";
                         $x = $x + 1;
                     }
                     else
                     {
-                        //$check = "Nee i: " . $i . " x: " . $x;
+                        // Niet vegetarisch
                         $check = "Nee";
                     } 
+                    // Zorg dat loop niet oneindig doorgaat
                     $x = $x + 1;
                     
+                    // Maak nieuwe maaltijd aan door middel van de Maaltijd model
                     $maaltijd[] = Maaltijd::create([
                         'id' => DB::table('maaltijds')->max('id') + 1,
                         'reservering' => $idReservering,
@@ -91,18 +134,20 @@ class ReserveringController extends Controller
                         'vegetarisch' => $check,
                         'barcode' => "999" . $post["maaltijd"][$i] . $id . DB::table('maaltijds')->max('id')
                     ]);
-                    //DB::table('maaltijds')->insert($maaltijd);
                 }
             }
+            // Variabelen om mee te gevven voor het opstellen van de email
             $aanmelding =  DB::table('aanmeldings')->where('idUser', 1)->first();
             $users = DB::table('users')->where('id', 1)->first();
             $pdf = PDF::loadView('pdf.pdf', ["ticketarray" => $ticket]);
             
             Event::fire(new MessageTicket($ticket, $maaltijd, $users, $aanmelding, $pdf));
+            // Stuur door naar route "reserverenComplete"
             return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
         }
     }
     
+    // Oude irrelevante reserveringscontrollerfunctie. Kon maar 1 ticket doen
     public function postReservering(Request $request)
     {
         /*$this->validate($request, [
