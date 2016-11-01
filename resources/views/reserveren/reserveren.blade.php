@@ -53,11 +53,44 @@
         
         
         /* ************************ Maaltijd ************************ */
-        /* Add row maaltijd */
-        $('.addmaaltijd').click(function(){
+        /* Add row maaltijd Vrijdag */
+        $('.addmaaltijdVrijdag').click(function(){
             var maaltijd = $('.maaltijd').html();
             var n = ($('.body_maaltijd tr').length-0)+1;
             var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
+                '<td><input type="text" name="dagMaaltijd[]" class="dagMaaltijd" value="Vrijdag" readonly></td>' +
+        		'<td><select name="maaltijd[]" class="maaltijd">' + 
+        		'<option maaltijd-prijs="{{ $maaltijden[0]->prijs }}" value="{{ $maaltijden[0]->id }}">{{ $maaltijden[0]->soort }}</option></select></td>' + 
+        		'<td><input type="hidden" name="vegetarisch[]" value="Nee" /> <input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarisch[]" value="Ja" style="width:25px;height:25px"></td>' +
+            	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
+        		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
+            $('.body_maaltijd').append(newTicketRow);
+            
+            changeValues();
+        });
+        
+        /* Add row maaltijd Zaterdag */
+        $('.addmaaltijdZaterdag').click(function(){
+            var maaltijd = $('.maaltijd').html();
+            var n = ($('.body_maaltijd tr').length-0)+1;
+            var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
+            '<td><input type="text" name="dagMaaltijd[]" class="dagMaaltijd" value="Zaterdag" readonly></td>' +
+        		'<td><select name="maaltijd[]" class="maaltijd">@foreach($maaltijden as $maaltijd)' + 
+        		'<option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>@endforeach</select></td>' + 
+        		'<td><input type="hidden" name="vegetarisch[]" value="Nee" /> <input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarisch[]" value="Ja" style="width:25px;height:25px"></td>' +
+            	'<td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="20" readonly></td>' + 
+        		'<td><a href="#" class="btn btn-danger delete">verwijder</a></td></tr>';
+            $('.body_maaltijd').append(newTicketRow);
+            
+            changeValues();
+        });
+        
+        /* Add row maaltijd Zondag */
+        $('.addmaaltijdZondag').click(function(){
+            var maaltijd = $('.maaltijd').html();
+            var n = ($('.body_maaltijd tr').length-0)+1;
+            var newTicketRow = '<tr><th class="no">'+ n +'</th>' +
+                '<td><input type="text" name="dagMaaltijd[]" class="dagMaaltijd" value="Zondag" readonly></td>' +
         		'<td><select name="maaltijd[]" class="maaltijd">@foreach($maaltijden as $maaltijd)' + 
         		'<option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>@endforeach</select></td>' + 
         		'<td><input type="hidden" name="vegetarisch[]" value="Nee" /> <input type="checkbox" id="vegetarisch" class="vegetarischCheck" name="vegetarisch[]" value="Ja" style="width:25px;height:25px"></td>' +
@@ -181,11 +214,14 @@
             
             <!-- ******* Maaltijd ******* -->
             <div class="col-md-6">
-                <button type="button" class="btn addmaaltijd" value="+">Maaltijd toevoegen +</button><br>
+                <button type="button" class="btn addmaaltijdVrijdag" value="+">Maaltijd Vrijdag +</button>
+                <button type="button" class="btn addmaaltijdZaterdag" value="+">Maaltijd Zaterdag +</button>
+                <button type="button" class="btn addmaaltijdZondag" value="+">Maaltijd Zondag +</button><br>
                 <table>
                     <thead>
                         <tr>
                             <th>Nr.</th>
+                            <th>Dag</th>
                             <th>Soort maaltijd</th>
                             <th>Vegetarisch</th>
                             <th>Prijs</th>
