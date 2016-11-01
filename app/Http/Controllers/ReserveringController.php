@@ -10,6 +10,7 @@ use App\Maaltijd;
 use PDF;
 use App\Http\Requests;
 use App\Events\MessageTicket;
+use App\Events\MessageTegenbod;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 

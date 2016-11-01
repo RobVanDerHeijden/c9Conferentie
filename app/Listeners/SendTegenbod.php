@@ -28,16 +28,16 @@ class SendTegenbod
     public function handle(MessageTegenbod $event)
     {
        $message = "Tegenbod bevestigd!";
-        /*$ticketArray = $event->ticket;
-        $maaltijdArray = $event->maaltijd;
         $userArray = $event->user;
-        $pdf = $event->pdf;*/
+        $aanmeldingArray = $event->aanmelding;
         
-        Mail::Send("email.email-tegenbod", ['message'=>$message], function($m) use($message) {
+        Mail::Send("email.email-tegenbod", [
+            'message'=>$message, 
+            'aanmeldingen'=>$aanmeldingArray, 
+            'users'=>$userArray], function($m) use($message) {
             $m->from("bunky_rob@hotmail.com", "Bunky™");
-            $m->to("what@waht.com", "yoyoyo");
+            $m->to("whomever@who.com", "yo");
             $m->subject($message);
-            /*$m->attachData($pdf->output(), "Robattatchment.pdf");*/
         });
     }
 }

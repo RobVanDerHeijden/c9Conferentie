@@ -11,30 +11,38 @@ class TicketTableSeeder extends Seeder
      */
     public function run()
     {
+        // Ticket id:1
         $ticket = new Ticket();
         $ticket->reservering = 1;
         $ticket->soort = 1;
         $ticket->barcode = "31415926535989732384262433832795001";
         $ticket->save();
-        
+        // Ticket id:2
         $ticket = new Ticket();
         $ticket->reservering = 1;
         $ticket->soort = 2;
         $ticket->barcode = "31415926535989732384262433832795002";
         $ticket->save();
-        
+        // Ticket id:3
         $ticket = new Ticket();
         $ticket->reservering = 1;
         $ticket->soort = 3;
         $ticket->barcode = "31415926535989732384262433832795003";
         $ticket->save();
-        
+        // Ticket id:4
         $ticket = new Ticket();
         $ticket->reservering = 1;
         $ticket->soort = 4;
         $ticket->barcode = "31415926535989732384262433832795004";
         $ticket->save();
+        // Ticket id:5
+        $ticket = new Ticket();
+        $ticket->reservering = 2;
+        $ticket->soort = 5;
+        $ticket->barcode = "31415926535989732384262433832795005";
+        $ticket->save();
         
+        // Ticket id:6
         $ticket = new Ticket();
         $ticket->reservering = 2;
         $ticket->soort = 5;

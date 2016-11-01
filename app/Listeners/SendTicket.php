@@ -34,7 +34,7 @@ class SendTicket
         $aanmeldingArray = $event->aanmelding;
         $pdf = $event->pdf;
         
-        Mail::Send("email.email-tegenbod", [
+        Mail::Send("email.email", [
             'message'=>$message, 
             'tickets'=>$ticketArray, 
             'maaltijden'=>$maaltijdArray, 

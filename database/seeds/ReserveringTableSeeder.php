@@ -90,4 +90,5 @@ class ReserveringTableSeeder extends Seeder
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
+    }
 }

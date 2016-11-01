@@ -9,15 +9,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class MessageTegenbod extends Event
 {
     use SerializesModels;
+    public $user = [];
+    public $aanmelding = [];
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $aanmelding)
     {
-        //
+        $this->user = $user;
+        $this->aanmelding = $aanmelding;
     }
 
     /**
