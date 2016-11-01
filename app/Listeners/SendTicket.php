@@ -27,18 +27,16 @@ class SendTicket
      */
     public function handle(MessageTicket $event)
     {
-        $message = "Aanmelding bevestigd!";
+        $message = "Reservering bevestigd!";
         $ticketArray = $event->ticket;
         $maaltijdArray = $event->maaltijd;
         $userArray = $event->user;
-        $aanmeldingArray = $event->aanmelding;
         $pdf = $event->pdf;
         
         Mail::Send("email.email", [
             'message'=>$message, 
             'tickets'=>$ticketArray, 
-            'maaltijden'=>$maaltijdArray, 
-            'aanmeldingen'=>$aanmeldingArray, 
+            'maaltijden'=>$maaltijdArray,
             'users'=>$userArray], function($m) use($message, $pdf) {
             $m->from("bunky_rob@hotmail.com", "Bunky™");
             $m->to("whomever@who.com", "yo");

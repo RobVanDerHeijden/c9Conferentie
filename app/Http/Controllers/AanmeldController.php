@@ -42,9 +42,7 @@ class AanmeldController extends Controller
         $aanmelding->kosten = $request["kosten"];
         $aanmelding->save();
         
-        
         DB::table('slots')->where('id', $request["slot1"])->update(['idStatus' => 2]);
-        
         
         return redirect()->route("completeaanmelden")->with(["success" => "U heeft succesvol gereserveerd!"]);
     }

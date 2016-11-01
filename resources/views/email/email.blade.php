@@ -1,5 +1,4 @@
 <?php $reserveringNr = DB::table('reserverings')->max('id'); ?>
-<?php $totalTickets = DB::table('tickets')->where('reservering', $reserveringNr)->get(); ?>
 <?php $totalMaaltijden = DB::table('maaltijds')->where('reservering', $reserveringNr)->get(); ?>
 <?php $reservering = DB::table('reserverings')->where('id', $reserveringNr)->get(); ?>
 <?php $userId = DB::table('users')->where('id', $reservering[0]->idUser)->get(); ?>
@@ -22,10 +21,7 @@ Uw bestelling is bevestigd!<br>
             <td>Prijs ticket</td>
         </tr>
         <?php $nrTicket = 1; $totaalPrijsTickets = 0; ?>
-        @foreach($tickets as $ticket)
-            {{ $ticket->barcode }}
-        @endforeach
-        @foreach ($totalTickets as $ticket)
+        @foreach ($tickets as $ticket)
             <?php $ticketSoort = DB::table('ticketsoorts')->where('id', $ticket->soort)->get(); ?>
             <tr>
                 <td>{{ $nrTicket }}</td>
@@ -93,11 +89,14 @@ Uw bestelling is bevestigd!<br>
             <td><strong>€ {{ $totaalPrijsTickets + $totaalPrijsMaaltijden }}</strong></td>
         </tr>
     </table>
+    @foreach($tickets as $ticket)
+        <?php $newCode = $ticket->barcode ?>
     
-    <div class="visible-print text-center">
-        <p>Barcode 1:</p>
-        {!! QrCode::size(100)->generate("Uw barcode is:" . $barcodes ); !!}
-    </div>
+        <div class="visible-print text-center" style="align:left">
+            <p>Barcode :</p>
+            {!! QrCode::size(100)->generate("Uw barcode is:" . $newCode ); !!}
+        </div>
+    @endforeach
 </div>
 <br>
 Hartelijk dank voor uw bestelling <u>{{ $userId[0]->naam }}</u>, wij wensen u een plezierige conferentie toe!<br>

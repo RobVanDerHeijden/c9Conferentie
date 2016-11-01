@@ -137,12 +137,10 @@ class ReserveringController extends Controller
                     ]);
                 }
             }
-            // Variabelen om mee te gevven voor het opstellen van de email
-            $aanmelding =  DB::table('aanmeldings')->where('idUser', 1)->first();
-            $users = DB::table('users')->where('id', 1)->first();
+            // Extra variabelen om mee te gevven voor het opstellen van de email
             $pdf = PDF::loadView('pdf.pdf', ["ticketarray" => $ticket]);
             
-            Event::fire(new MessageTicket($ticket, $maaltijd, $users, $aanmelding, $pdf));
+            Event::fire(new MessageTicket($ticket, $maaltijd, $user, $pdf));
             // Stuur door naar route "reserverenComplete"
             return redirect()->route("reserverenComplete")->with(["success" => "U heeft succesvol gereserveerd!"]);
         }

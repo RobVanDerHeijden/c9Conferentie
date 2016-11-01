@@ -12,7 +12,6 @@ class MessageTicket extends Event
     public $ticket = [];
     public $maaltijd = [];
     public $user = [];
-    public $aanmelding = [];
     public $pdf;
 
     /**
@@ -20,12 +19,11 @@ class MessageTicket extends Event
      *
      * @return void
      */
-    public function __construct($ticket, $maaltijd, $user, $aanmelding, $pdf)
+    public function __construct($ticket, $maaltijd, $user, $pdf)
     {
         $this->ticket = $ticket;
         $this->maaltijd = $maaltijd;
         $this->user = $user;
-        $this->aanmelding = $aanmelding;
         $this->pdf = $pdf;
     }
 

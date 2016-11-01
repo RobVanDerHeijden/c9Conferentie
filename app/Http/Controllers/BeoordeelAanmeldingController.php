@@ -50,7 +50,7 @@ class BeoordeelAanmeldingController extends Controller
         */
         /*Event::fire(new MessageTegenbod($user, $aanmelding));*/
         
-        $message = "Tegenbod bevestigd!";
+        $message = "Tegenbod aanmelding!";
         $userArray = $user;
         $aanmeldingArray = $aanmelding;
         
