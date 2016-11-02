@@ -9,6 +9,7 @@ use App\Ticket;
 use App\Maaltijd;
 use PDF;
 use App\Http\Requests;
+use QrCode;
 use App\Events\MessageTicket;
 use App\Events\MessageTegenbod;
 use Illuminate\Support\Facades\DB;
@@ -137,8 +138,17 @@ class ReserveringController extends Controller
                     ]);
                 }
             }
+            
+            foreach ($ticket as $ticketQr) {
+                QrCode::format('png')->size(250)->generate('ticketcode: ' . $ticketQr->barcode,public_path(). '/src/tickets/'.$ticketQr->id.'.jpg');
+            }
+            
+            foreach ($maaltijd as $maaltijdQr) {
+                QrCode::format('png')->size(250)->generate('maaltijdcode: ' . $maaltijdQr->barcode,public_path(). '/src/maaltijden/' . $maaltijdQr->id . '.jpg');
+            }
+            
             // Extra variabelen om mee te gevven voor het opstellen van de email
-            $pdf = PDF::loadView('pdf.pdf', ["ticketarray" => $ticket]);
+            $pdf = PDF::loadView('pdf.pdf', ["ticketarray" => $ticket, "maaltijdarray" => $maaltijd]);
             
             Event::fire(new MessageTicket($ticket, $maaltijd, $user, $pdf));
             // Stuur door naar route "reserverenComplete"

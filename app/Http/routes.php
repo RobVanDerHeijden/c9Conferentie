@@ -108,5 +108,7 @@ Route::group(['prefix' => 'aanmelden'], function() {
     
     Route::post('/postWeigerTegenbod', ['uses' => 'BeoordeelAanmeldingController@postWeigerTegenbod', 'as' => 'postWeigerTegenbod']);
     
+    Route::post('/postTag', ['uses' => 'BeoordeelAanmeldingController@postTag', 'as' => 'postTag']);
+    
     
 });

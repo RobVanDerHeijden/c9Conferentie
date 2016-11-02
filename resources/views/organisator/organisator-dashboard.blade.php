@@ -1,120 +1,11 @@
 @extends('layouts.master')
 @section('content')
-<script>
-    /*
-    $(document).ready(function() {
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me0') {
-                $('#show-me0').show();           
-           }
-    
-           else {
-                $('#show-me0').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me1') {
-                $('#show-me1').show();           
-           }
-    
-           else {
-                $('#show-me1').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me2') {
-                $('#show-me2').show();           
-           }
-    
-           else {
-                $('#show-me2').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me3') {
-                $('#show-me3').show();           
-           }
-    
-           else {
-                $('#show-me3').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me4') {
-                $('#show-me4').show();           
-           }
-    
-           else {
-                $('#show-me4').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me5') {
-                $('#show-me5').show();           
-           }
-    
-           else {
-                $('#show-me5').hide();   
-           }
-        });
-        
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me6') {
-                $('#show-me6').show();           
-           }
-    
-           else {
-                $('#show-me6').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me7') {
-                $('#show-me7').show();           
-           }
-    
-           else {
-                $('#show-me7').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me8') {
-                $('#show-me8').show();           
-           }
-    
-           else {
-                $('#show-me8').hide();   
-           }
-        });
-        $('input[type="radio"]').click(function() {
-           if($(this).attr('id') == 'watch-me9') {
-                $('#show-me9').show();           
-           }
-    
-           else {
-                $('#show-me9').hide();   
-           }
-        });
-       /* $(".show").each(function() {
-            alert("I am an alert box!");
-        });
-        
-        var numShow = $('.show').length;
-        for(var i = 0; i < numShow; ++i){
-            numArr[numArr.length] = i;
-            funArr[funArr.length] = getFun(i);
-        }
-        
-        function getFun(val) {
-            return function() { return val; };
-        }
-    });
-    
-    */
-</script>
 <?php $aanmeldingen = DB::table('aanmeldings')->get(); ?>
 <div class="row marketing">
+    @include('includes.info-box')
     <div class="col-lg-6">
-        @include('includes.info-box')
+        <h2>Aanvragen beoordelen</h2>
+        <hr class="lijnsplit">
         <h3>Accepteren</h3>
         <form  method="post" action='{{route('postacceptaanmelding')}}' id='reserveren'>
             <table>
@@ -174,11 +65,78 @@
                 </tr>
             </table>
         </form>
+        
+        <?php $tags = DB::table('tags')->get(); ?>
+        <?php $slotenBezet = DB::table('slots')->where('idStatus', 3)->get(); ?>
+        <hr class="lijnsplit">
+        <h2>Tags aan slots toekennen</h2>
+        <form method="post" action='{{route('postTag')}}' id='postTag'>
+            <table>
+                <tr>
+                    <th>ID slot: </th>
+                    <th>Dag</th>
+                    <th>Begintijd</th>
+                    <th>Eindtijd</th>
+                    <th>Onderwerp</th>
+                    <th>Omschrijving</th>
+                </tr>
+                @foreach ($slotenBezet as $slot)
+                    <?php $aanmelding = DB::table('aanmeldings')->where('idSlot', $slot->id)->first(); ?>
+                    <tr>
+                        <td>{{ $slot->id }}</td>
+                        <td>{{ $slot->dag }}</td>
+                        <td>{{ $slot->beginTijd }}</td>
+                        <td>{{ $slot->eindTijd }}</td>
+                        <td>{{ $aanmelding->onderwerp }}</td>
+                        <td>{{ $aanmelding->omschrijving }}</td>
+                        <td><input type="radio" class="show" name="idSlot" value="{{ $slot->id }}"></td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td>
+                        <select name="tag1" class="tag1">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
+                            @endforeach
+                        </select>
+                        <select name="tag2" class="tag2">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
+                            @endforeach
+                        </select>
+                        <select name="tag3" class="tag3">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><button type="submit" class="btn">Bevestigen</button></td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+        
+        <table>
+            <tr>
+                <th>Nr. </th>
+                <th>Tag </th>
+            </tr>
+            
+            @foreach ($tags as $tag)
+                <tr>
+                    <td>{{ $tag->idTag }}</td>
+                    <td>{{ $tag->tag }}</td>
+                </tr>
+            @endforeach
+        </table>
+        <hr class="lijnsplit">
     </div>
     
     
-    
-    
+
     <!-- Database gegevens voor deze tabel -->
     <?php $openstaandeKosten = DB::table('aanmeldings')->where([
         ['kosten', '>', 0], 
@@ -206,17 +164,14 @@
                 </tr>
                 <?php $x = 0; ?>
                 @foreach($openstaandeKosten as $aanmelding)
-                    
-                        <?php $naamUserAanmelding = DB::table('users')->where('id', $aanmelding->idUser)->first(); ?>
-                        
-                        <tr>
-                            <td value={{$aanmelding->idUser}}>{{$aanmelding->idUser}}</td>
-                            <td>{{ $naamUserAanmelding->naam }}</td>
-                            <td>{{ $aanmelding->kosten }}</td>
-                            <td><input type="radio" id="watch-me{{$x}}" class="show" name="idUser" value="{{$aanmelding->idUser}}"></td>
-                            <!--<td><input type="number" id="show-me{{$x}}" name="nieuweKosten" style='display:none' min="0" max={{ $aanmelding->kosten }}></td>-->
-                        </tr>
-                        <?php $totaalOpenstaand = $totaalOpenstaand + $aanmelding->kosten ?>
+                    <?php $naamUserAanmelding = DB::table('users')->where('id', $aanmelding->idUser)->first(); ?>
+                    <tr>
+                        <td value={{$aanmelding->idUser}}>{{$aanmelding->idUser}}</td>
+                        <td>{{ $naamUserAanmelding->naam }}</td>
+                        <td>{{ $aanmelding->kosten }}</td>
+                        <td><input type="radio" id="watch-me{{$x}}" class="show" name="idUser" value="{{$aanmelding->idUser}}"></td>
+                    </tr>
+                    <?php $totaalOpenstaand = $totaalOpenstaand + $aanmelding->kosten ?>
                     <?php $x = $x + 1; ?>
                 @endforeach
                 <tr>
@@ -263,6 +218,7 @@
                 <td><input type="text" name="openstaandTotaal" class="overTotaal" value={{ $budget->budget }} readonly></td>
             </tr>
         </table>
+        <hr class="lijnsplit">
     </div>
 </div>
 @endsection

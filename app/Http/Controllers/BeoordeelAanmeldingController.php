@@ -96,4 +96,15 @@ class BeoordeelAanmeldingController extends Controller
         
         return redirect()->route("aanmelden")->with(["success" => "U heeft succesvol uw aanmelding geweigerd!"]);
     }
+    
+    public function postTag(Request $request)
+    {
+        /*$aanmelding = DB::table('aanmeldings')->where('idAanmelding', $request["aanmeldingsId"])->first();
+        $slotId = $aanmelding->idSlot;
+        
+        DB::table('slots')->where('id', $slotId)->update(['idStatus' => 1]);
+        DB::table('aanmeldings')->where('idAanmelding', $request["aanmeldingsId"])->delete();*/
+        
+        return redirect()->route("aanmelden")->with(["success" => "U heeft succesvol uw aanmelding tags gegeven!"]);
+    }
 }

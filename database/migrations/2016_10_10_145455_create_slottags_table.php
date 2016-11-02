@@ -13,6 +13,7 @@ class CreateSlottagsTable extends Migration
     public function up()
     {
         Schema::create('slot_tags', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('idSlot')->unsigned();
             $table->foreign('idSlot')->references('id')->on('slots');
             $table->integer('idTag')->unsigned();
