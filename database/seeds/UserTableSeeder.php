@@ -197,5 +197,27 @@ class UserTableSeeder extends Seeder
         $user->woonplaats = "Harambe";
         $user->rol = "bezoeker";
         $user->save();
+        // User id:17
+        $user = new User();
+        $user->naam = "Winston";
+        $user->tussenvoegsel = "harambe";
+        $user->achternaam = "ston";
+        $user->email = "Winning@stonning.gmail.com";
+        $user->telnummer = "0615915943";
+        $user->adres = "Do4H folaif 97";
+        $user->woonplaats = "Harambe";
+        $user->rol = "bezoeker";
+        $user->save();
+        // User id:18
+        $user = new User();
+        $user->naam = "Kees";
+        $user->tussenvoegsel = "de";
+        $user->achternaam = "Boer";
+        $user->email = "K@B.gmail.com";
+        $user->telnummer = "0645612378";
+        $user->adres = "Gewonestraat 12";
+        $user->woonplaats = "Normalostad";
+        $user->rol = "bezoeker";
+        $user->save();
     }
 }

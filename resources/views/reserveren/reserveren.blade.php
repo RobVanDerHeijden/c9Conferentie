@@ -3,6 +3,14 @@
 <script>
     
     $(function(){
+        
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var output = ((''+day).length<2 ? '0' : '')+day+'/'+((''+month).length<2 ? '0' : '')+month+'/'+d.getFullYear();
+        var vroegboekkortingCheck = 1;
+        var laatstaMaand = 10;
+        
         /* ************************ Algemene functies ************************ */
         /* Verander functie voor change Values van totale prijzen */
         function changeValues() {
@@ -17,7 +25,14 @@
 
             document.getElementById("totaalTicket").value = sumTickets;
             document.getElementById("totaalMaaltijd").value = sumMeals;
-            document.getElementById("totaalReservering").value = sumMeals + sumTickets;
+            if (d.getFullYear() <= 2016 && month <= laatstaMaand && day <= 16) {
+            	//alert(output);
+                vroegboekkortingCheck = 0.8;
+                
+                $(".bespaarKorting").val((sumMeals + sumTickets) * 0.2);
+            }
+            
+            document.getElementById("totaalReservering").value = (sumMeals + sumTickets) * vroegboekkortingCheck;
         }
         /* ************************ Ticket ************************ */
         /* Add row ticket */
@@ -139,12 +154,22 @@
                 //console.log('Unchecked');
             }
         });
+        
+        /* Discount actif if ordered 2 months early */
+        if (d.getFullYear() <= 2016 && month <= laatstaMaand && day <= 16) {
+        	//alert(output);
+            $(".vroegboekkorting").val("Actief");
+        } else {
+            $(".vroegboekkorting").val("Inactief");
+        }
+
     });
     
 </script>
 
 <section class="reservering"> 
     <h1> Tickets Reserveren </h1>
+    <h5>!!! Ontvang 20% vroegboekkorting als je minstens 2 maanden van tevoren besteld !!!</h5>
     <div class="col-md-6">
         <table>
             <tr><th>Ticket</th>         <th>Prijs in €</th> <th>Beschikbaar</th></tr>
@@ -231,24 +256,7 @@
                         <label for="maaltijd">
                             Kies een maaltijd: 
                         </label><br>
-                        <!--
-                        <tr>
-                            <th class="no">1</th>
-                            <td>
-                                <select name="maaltijd[]" class="maaltijd">
-                                    <option>geen maaltijd</option>
-                                    @foreach($maaltijden as $maaltijd)
-                                        <option maaltijd-prijs="{{ $maaltijd->prijs }}" value="{{ $maaltijd->id }}">{{ $maaltijd->soort }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <input type="hidden" name="vegetarisch[]" value="Nee" />
-                                <input type="checkbox" class="vegetarischCheck" name="vegetarisch[]" style="width:25px;height:25px" value="Ja">
-                            </td>
-                            <td><input type="text" name="priceMaaltijd[]" class="priceMaaltijd" value="0" readonly></td>
-                        </tr>
-                        -->
+                        <!-- Hier komen de nieuwe rows van maaltijden -->
                     </tbody>
                 </table>
             </div>
@@ -267,6 +275,15 @@
                         <tr>
                             <td><label for="totaal">Totaal reservering: </label></td>
                             <td><input type="text" id="totaalReservering" name="totaalReservering" class="totaalReservering" value="45" readonly></td>
+                        </tr>
+                        <tr><td colspan="2"><hr class="lijnsplit"></td></tr>
+                        <tr>
+                            <td><label for="totaal">Vroegboekkorting van 20%:</label></td>
+                            <td><input type="text" id="vroegboekkorting" name="vroegboekkorting" class="vroegboekkorting" value="Inactief" readonly></td>
+                        </tr>
+                        <tr>
+                            <td><label for="totaal">Totale besparing<br></label></td>
+                            <td><input type="text" id="bespaarKorting" name="bespaarKorting" class="bespaarKorting" value="0" readonly></td>
                         </tr>
                     </table>
                 </center>

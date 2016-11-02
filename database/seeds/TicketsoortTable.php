@@ -15,19 +15,19 @@ class TicketsoortTable extends Seeder
         $ticketsoort = new Ticketsoort();
         $ticketsoort->soort = "vrijdag";
         $ticketsoort->prijs = 45;
-        $ticketsoort->beschikbaar = 250;
+        $ticketsoort->beschikbaar = 228;
         $ticketsoort->save();
         
         $ticketsoort = new Ticketsoort();
         $ticketsoort->soort = "zaterdag";
         $ticketsoort->prijs = 60;
-        $ticketsoort->beschikbaar = 250;
+        $ticketsoort->beschikbaar = 217;
         $ticketsoort->save();
         
         $ticketsoort = new Ticketsoort();
         $ticketsoort->soort = "zondag";
         $ticketsoort->prijs = 30;
-        $ticketsoort->beschikbaar = 250;
+        $ticketsoort->beschikbaar = 216;
         $ticketsoort->save();
         
         $ticketsoort = new Ticketsoort();

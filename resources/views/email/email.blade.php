@@ -85,8 +85,12 @@ Uw bestelling is bevestigd!<br>
             <td>€ {{ $totaalPrijsMaaltijden }}</td>
         </tr>
         <tr>
+            <td colspan="2">Totaal Vroegboekkorting:</td>
+            <td>€ {{ ($totaalPrijsTickets + $totaalPrijsMaaltijden) - $reservering[0]->prijs }}</td>
+        </tr>
+        <tr>
             <td colspan="2">Totaal Reservering:</td>
-            <td><strong>€ {{ $totaalPrijsTickets + $totaalPrijsMaaltijden }}</strong></td>
+            <td><strong>€ {{ $reservering[0]->prijs }}</strong></td>
         </tr>
     </table>
 </div>

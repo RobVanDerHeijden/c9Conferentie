@@ -166,7 +166,7 @@ class ReserveringController extends Controller
             DB::table('maaltijds')->where('id', $request["idMaaltijd"])->delete();
         }
         
-        //return redirect()->route("reserverenAfzeggen")->with(["success" => "U heeft succesvol uw rezervering afgezegd!"]);
+        return redirect()->back();
     }
     
     // Oude irrelevante reserveringscontrollerfunctie. Kon maar 1 ticket doen

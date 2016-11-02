@@ -20,70 +20,72 @@ class ReserveringTableSeeder extends Seeder
         $reservering->save();
         // Reservering id:2
         $reservering = new Reservering();
-        $reservering->idUser = 1;
+        $reservering->idUser = 2;
         $reservering->betaalmethode = "CreditCard";
         $reservering->prijs = 80;
         $reservering->save();
+        
         // Reservering id:3
         $reservering = new Reservering();
-        $reservering->idUser = 6;
+        $reservering->idUser = 3;
         $reservering->betaalmethode = "PayPal";
         $reservering->prijs = 335; // Alle soorten tickets + 1 lunch op vrijdag
         $reservering->save();
         // Reservering id:4
         $reservering = new Reservering();
-        $reservering->idUSer = 7;
+        $reservering->idUSer = 4;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:5
         $reservering = new Reservering();
-        $reservering->idUSer = 8;
+        $reservering->idUSer = 5;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:6
         $reservering = new Reservering();
-        $reservering->idUSer = 9;
+        $reservering->idUSer = 6;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:7
         $reservering = new Reservering();
-        $reservering->idUSer = 10;
+        $reservering->idUSer = 7;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:8
         $reservering = new Reservering();
-        $reservering->idUSer = 11;
+        $reservering->idUSer = 8;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:9
         $reservering = new Reservering();
-        $reservering->idUSer = 12;
+        $reservering->idUSer = 9;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:10
         $reservering = new Reservering();
-        $reservering->idUSer = 13;
+        $reservering->idUSer = 10;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:11
         $reservering = new Reservering();
-        $reservering->idUSer = 14;
+        $reservering->idUSer = 11;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
         // Reservering id:12
         $reservering = new Reservering();
-        $reservering->idUSer = 15;
+        $reservering->idUSer = 12;
         $reservering->betaalmethode = "Paypal";
         $reservering->prijs = 335; // Alle soorten tickets + lunch op vrijdag
         $reservering->save();
+        
         // Reservering id:13
         $reservering = new Reservering();
         $reservering->idUSer = 16;
