@@ -73,6 +73,10 @@ Route::group(['prefix' => 'reserveren'], function() {
     Route::get('/complete', function() {
         return view('reserveren.complete');
     })->name('reserverenComplete');
+    
+    Route::get('/afzeggen', function() {
+        return view('reserveren.afzeggen');
+    })->name('reserverenAfzeggen');
 });
 
 Route::group(['prefix' => 'aanmelden'], function() {
@@ -110,5 +114,6 @@ Route::group(['prefix' => 'aanmelden'], function() {
     
     Route::post('/postTag', ['uses' => 'BeoordeelAanmeldingController@postTag', 'as' => 'postTag']);
     
+    Route::post('/afzegReservering', ['uses' => 'ReserveringController@afzegReservering', 'as' => 'afzegReservering']);
     
 });

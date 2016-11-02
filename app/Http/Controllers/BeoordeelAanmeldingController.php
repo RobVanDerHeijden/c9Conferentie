@@ -118,12 +118,6 @@ class BeoordeelAanmeldingController extends Controller
     
     public function postTag(Request $request)
     {
-        /*$aanmelding = DB::table('aanmeldings')->where('idAanmelding', $request["aanmeldingsId"])->first();
-        $slotId = $aanmelding->idSlot;
-        
-        DB::table('slots')->where('id', $slotId)->update(['idStatus' => 1]);
-        DB::table('aanmeldings')->where('idAanmelding', $request["aanmeldingsId"])->delete();*/
-        
         $slottag1 = new SlotTag();
         $slottag1->id = DB::table('slot_tags')->max('id') + 1;
         $slottag1->idSlot = $request["idSlot"];
@@ -141,11 +135,6 @@ class BeoordeelAanmeldingController extends Controller
         $slottag3->idSlot = $request["idSlot"];
         $slottag3->idTag = $request["tag3"];
         $slottag3->save();
-        
-        
-        
-        
-        
         
         return redirect()->route("dashboard")->with(["success" => "U heeft succesvol uw aanmelding tags gegeven!"]);
     }

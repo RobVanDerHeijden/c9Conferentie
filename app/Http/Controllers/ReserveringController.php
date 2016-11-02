@@ -156,6 +156,19 @@ class ReserveringController extends Controller
         }
     }
     
+    public function afzegReservering(Request $request)
+    {
+        $reservering = DB::table('reserverings')->where('id', $request["reserveringNr"])->first();
+        if (isset($request["idTicket"])) {
+            DB::table('tickets')->where('id', $request["idTicket"])->delete();
+        }
+        if (isset($request["idMaaltijd"])) {
+            DB::table('maaltijds')->where('id', $request["idMaaltijd"])->delete();
+        }
+        
+        //return redirect()->route("reserverenAfzeggen")->with(["success" => "U heeft succesvol uw rezervering afgezegd!"]);
+    }
+    
     // Oude irrelevante reserveringscontrollerfunctie. Kon maar 1 ticket doen
     public function postReservering(Request $request)
     {
