@@ -7,6 +7,7 @@ use App\User;
 use App\Aanmelding;
 use PDF;
 use App\Http\Requests;
+use App\SlotTag;
 use App\Events\MessageTicket;
 use App\Events\MessageTegenbod;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,26 @@ class BeoordeelAanmeldingController extends Controller
         DB::table('sprekerskostens')->where('id', 1)->update(['budget' => $nieuwBudget]);
         
         DB::table('aanmeldings')->where('idAanmelding', $request["aanmelding"])->update(['status' => "Geaccepteerd"]);
+        
+        $idSlot = DB::table('slots')->where('id', $aanmeldingsId->idSlot)->first();
+        
+        $slottag1 = new SlotTag();
+        $slottag1->id = DB::table('slot_tags')->max('id') + 1;
+        $slottag1->idSlot = $idSlot->id;
+        $slottag1->idTag = $request["tag1"];
+        $slottag1->save();
+        
+        $slottag2 = new SlotTag();
+        $slottag2->id = DB::table('slot_tags')->max('id') + 1;
+        $slottag2->idSlot =  $idSlot->id;
+        $slottag2->idTag = $request["tag2"];
+        $slottag2->save();
+        
+        $slottag3 = new SlotTag();
+        $slottag3->id = DB::table('slot_tags')->max('id') + 1;
+        $slottag3->idSlot =  $idSlot->id;
+        $slottag3->idTag = $request["tag3"];
+        $slottag3->save();
         
         return redirect()->route("dashboard")->with(["success" => "U heeft succesvol een aanmelding geaccepteerd!"]);
     }
@@ -62,8 +83,6 @@ class BeoordeelAanmeldingController extends Controller
             $m->to("whomever@who.com", "yo");
             $m->subject($message);
         });
-        
-        
         
         return redirect()->route("dashboard")->with(["success" => "U heeft een mail gestuurd!"]);
     }
@@ -105,6 +124,29 @@ class BeoordeelAanmeldingController extends Controller
         DB::table('slots')->where('id', $slotId)->update(['idStatus' => 1]);
         DB::table('aanmeldings')->where('idAanmelding', $request["aanmeldingsId"])->delete();*/
         
-        return redirect()->route("aanmelden")->with(["success" => "U heeft succesvol uw aanmelding tags gegeven!"]);
+        $slottag1 = new SlotTag();
+        $slottag1->id = DB::table('slot_tags')->max('id') + 1;
+        $slottag1->idSlot = $request["idSlot"];
+        $slottag1->idTag = $request["tag1"];
+        $slottag1->save();
+        
+        $slottag2 = new SlotTag();
+        $slottag2->id = DB::table('slot_tags')->max('id') + 1;
+        $slottag2->idSlot = $request["idSlot"];
+        $slottag2->idTag = $request["tag2"];
+        $slottag2->save();
+        
+        $slottag3 = new SlotTag();
+        $slottag3->id = DB::table('slot_tags')->max('id') + 1;
+        $slottag3->idSlot = $request["idSlot"];
+        $slottag3->idTag = $request["tag3"];
+        $slottag3->save();
+        
+        
+        
+        
+        
+        
+        return redirect()->route("dashboard")->with(["success" => "U heeft succesvol uw aanmelding tags gegeven!"]);
     }
 }

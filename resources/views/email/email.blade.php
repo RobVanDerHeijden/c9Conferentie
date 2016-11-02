@@ -93,5 +93,8 @@ Uw bestelling is bevestigd!<br>
 <br>
 Hartelijk dank voor uw bestelling <u>{{ $userId[0]->naam }}</u>, wij wensen u een plezierige conferentie toe!<br>
 <br>
+Als je wilt afzeggen, klik dan op de link:<br>
+<a href="http://conferentie-site-bunky.c9users.io/reserveren/vervolg?
+reserveringNr={{ $reserveringNr }}" name="home">Afzeggen</a><br>
 Mvg,<br>
 Bunky™ corp.

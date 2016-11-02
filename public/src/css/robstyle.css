@@ -64,7 +64,7 @@ body {
 }
     
 .slot_status_open {
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .slot_status_onder_voorbehoud {
@@ -72,7 +72,7 @@ body {
 }
 
 .slot_status_bezet {
-    background-color: red;
+    background-color: lightgrey;
 }
 
 hr.lijnsplit {

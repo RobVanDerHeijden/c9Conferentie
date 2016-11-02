@@ -27,9 +27,46 @@
                         </select>
                     </td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td><button type="submit" class="btn">Bevestigen</button></td>
                     <td></td>
+                </tr>
+                <tr>
+                    <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>
+                    <td></td>
+                </tr>-->
+            </table>
+            <?php $tags = DB::table('tags')->get(); ?>
+            <table>
+                <tr>
+                    <td>
+                        <select name="tag1" class="tag1">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="tag2" class="tag2">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="tag3" class="tag3">
+                            @foreach ($tags as $tag)
+                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr> 
+                <tr>
+                    <td><button type="submit" class="btn">Bevestigen</button></td>
                 </tr>
                 <tr>
                     <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>
@@ -66,72 +103,7 @@
             </table>
         </form>
         
-        <?php $tags = DB::table('tags')->get(); ?>
-        <?php $slotenBezet = DB::table('slots')->where('idStatus', 3)->get(); ?>
-        <hr class="lijnsplit">
-        <h2>Tags aan slots toekennen</h2>
-        <form method="post" action='{{route('postTag')}}' id='postTag'>
-            <table>
-                <tr>
-                    <th>ID slot: </th>
-                    <th>Dag</th>
-                    <th>Begintijd</th>
-                    <th>Eindtijd</th>
-                    <th>Onderwerp</th>
-                    <th>Omschrijving</th>
-                </tr>
-                @foreach ($slotenBezet as $slot)
-                    <?php $aanmelding = DB::table('aanmeldings')->where('idSlot', $slot->id)->first(); ?>
-                    <tr>
-                        <td>{{ $slot->id }}</td>
-                        <td>{{ $slot->dag }}</td>
-                        <td>{{ $slot->beginTijd }}</td>
-                        <td>{{ $slot->eindTijd }}</td>
-                        <td>{{ $aanmelding->onderwerp }}</td>
-                        <td>{{ $aanmelding->omschrijving }}</td>
-                        <td><input type="radio" class="show" name="idSlot" value="{{ $slot->id }}"></td>
-                    </tr>
-                @endforeach
-                <tr>
-                    <td>
-                        <select name="tag1" class="tag1">
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
-                            @endforeach
-                        </select>
-                        <select name="tag2" class="tag2">
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
-                            @endforeach
-                        </select>
-                        <select name="tag3" class="tag3">
-                            @foreach ($tags as $tag)
-                                <option value="{{ $tag->idTag }}">TagID:{{ $tag->idTag }} | Tag:{{ $tag->tag }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td><button type="submit" class="btn">Bevestigen</button></td>
-                </tr>
-                <tr>
-                    <td><input type="hidden" name="_token" value="{{ Session::token() }}"/></td>
-                    <td></td>
-                </tr>
-            </table>
-        </form>
         
-        <table>
-            <tr>
-                <th>Nr. </th>
-                <th>Tag </th>
-            </tr>
-            
-            @foreach ($tags as $tag)
-                <tr>
-                    <td>{{ $tag->idTag }}</td>
-                    <td>{{ $tag->tag }}</td>
-                </tr>
-            @endforeach
-        </table>
         <hr class="lijnsplit">
     </div>
     
