@@ -9,7 +9,7 @@
         var day = d.getDate();
         var output = ((''+day).length<2 ? '0' : '')+day+'/'+((''+month).length<2 ? '0' : '')+month+'/'+d.getFullYear();
         var vroegboekkortingCheck = 1;
-        var laatstaMaand = 10;
+        var laatstaMaand = 11;
         
         /* ************************ Algemene functies ************************ */
         /* Verander functie voor change Values van totale prijzen */

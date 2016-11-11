@@ -1,0 +1,1 @@
+web: vendor/bin/herku-php-apashe2 public/
